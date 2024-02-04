@@ -12,3 +12,20 @@ export const createUser = async (request, response) => {
     }
 };
 
+export const updateUser = async (request, response) => {
+    try {
+        console.log('Update User Function Started');
+        const id = request.params.id;
+        console.log('User ID:', id);
+        const params = { ...request.body };
+        console.log('Request Body:', params);
+        const updatedUser = await userService.update(params, id);
+        console.log('Updated User:', updatedUser);
+        setResponse(response);
+    } catch (e) {
+        console.error(e);
+        setErrorResponse('500', response);
+    }
+};
+
+
