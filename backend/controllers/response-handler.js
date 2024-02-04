@@ -1,5 +1,5 @@
-export const setResponse = (response) => {
-    response.status(200).send();
+export const setResponse = (data,response) => {
+    response.status(200).json(data);
   };
   
   export const setErrorResponse = (errorCode,response) => {
