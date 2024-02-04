@@ -11,9 +11,9 @@ const PORT = 3000;
 
 // Define your basic authentication credentials
 const basicAuthOptions = {
-  users: { [process.env.BASIC_AUTH_USERNAME]: process.env.BASIC_AUTH_PASSWORD }, // Replace with your actual username and password
-  challenge: true, // Display authentication dialog when credentials are missing
-  unauthorizedResponse: '', // Custom response when authentication fails
+  users: { [process.env.BASIC_AUTH_USERNAME]: process.env.BASIC_AUTH_PASSWORD }, 
+  challenge: true,
+  unauthorizedResponse: '', 
 };
 
 // Use basicAuth middleware for authenticated routes
