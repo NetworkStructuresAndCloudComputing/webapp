@@ -17,6 +17,7 @@ const userSchema = {
   username: {
     type: DataTypes.STRING,
     allowNull: false,
+    unique: true, 
   },
 };
 

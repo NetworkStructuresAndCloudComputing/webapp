@@ -7,7 +7,6 @@ export const searchById = async (params = {}) => {
   return user;
 };
 
-
 export const create = async (params = {}) => {
   const { password, ...rest } = params;
   const hashedPassword = await bcrypt.hash(password, 10);
