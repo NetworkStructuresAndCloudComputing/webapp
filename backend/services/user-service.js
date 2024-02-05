@@ -9,8 +9,9 @@ export const searchById = async (params = {}) => {
 };
 
 export const searchByEmail = async (params = {}) => {
-  const user = await User.findOne({where: {email: params.email}}); // exec returns a promise
-  return user;
+  const user = await User.findOne({ where: { email: params.email } }); // exec returns a promise
+  const userResponse = { ...user.toJSON(), password: undefined };
+  return userResponse;
 };
 
 export const create = async (params = {}) => {
