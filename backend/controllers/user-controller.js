@@ -22,16 +22,13 @@ export const getUser = async (request, response) => {
   export const createUser = async (request, response) => {
     try {
         const params = { ...request.body };
-
         const existingUser = await userService.searchByEmail({ email: params.email });
-
-        if(existingUser && Object.keys(existingUser).length){
-            setErrorResponse('400',response);
+        if(existingUser) {
+            setErrorResponse('400', response, 'User with the email already exists');
         } else {
             const newUser = await userService.create(params);
-            setResponse(newUser,response);
+            setResponse(newUser, response);
         }
-       
     } catch (error) {
         console.error(error);
         setErrorResponse('500', response);

@@ -9,10 +9,19 @@ export const searchById = async (params = {}) => {
 };
 
 export const searchByEmail = async (params = {}) => {
-  const user = await User.findOne({ where: { email: params.email } }); // exec returns a promise
-  const userResponse = { ...user.toJSON(), password: undefined };
-  return userResponse;
+  try {
+    const user = await User.findOne({ where: { email: params.email } });
+    if (!user) {
+      return null;
+    }
+    const userResponse = { ...user.toJSON(), password: undefined };
+    return userResponse;
+  } catch (error) {
+    console.error('Error searching by email:', error);
+    throw error;
+  }
 };
+
 
 export const create = async (params = {}) => {
   try {
