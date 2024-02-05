@@ -47,7 +47,7 @@ export const updateUser = async (request, response) => {
         setResponse(updatedUser,response);
     } catch (e) {
         console.error(e);
-        setErrorResponse('500', response);
+        setErrorResponse('400', response);
     }
 };
 

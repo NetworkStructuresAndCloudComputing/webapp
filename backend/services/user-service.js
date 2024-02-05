@@ -31,25 +31,31 @@ export const create = async (params = {}) => {
 
 export const update = async (params, id) => {
   try {
+    const allowedFields = ['firstName', 'lastName', 'password'];
+    const updatedFields = Object.keys(params);
+    const invalidFields = updatedFields.filter(field => !allowedFields.includes(field));
+
+    if (invalidFields.length > 0) {
+      throw new Error(`Invalid update fields: ${invalidFields.join(', ')}`);
+    }
+
     if (params.password) {
       params.password = await bcrypt.hash(params.password, 10);
     }
+
     const user = await User.findByPk(id);
 
     if (!user) {
       throw new Error('User not found');
     }
-    Object.assign(user, params);
 
+    Object.assign(user, params);
     await user.save();
+
     const userResponse = { ...user.toJSON(), password: undefined };
     return userResponse;
-    
   } catch (error) {
     console.error('Error updating user:', error);
     throw error;
   }
 };
-
-
-
