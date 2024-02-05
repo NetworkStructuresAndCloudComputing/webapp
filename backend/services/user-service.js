@@ -4,7 +4,8 @@ import bcrypt from 'bcrypt'; // Add this line
 
 export const searchById = async (params = {}) => {
   const user = await User.findOne({ where: { id: params.id } });
-  return user;
+  const userResponse = { ...user.toJSON(), password: undefined };
+  return userResponse;
 };
 
 export const searchByEmail = async (params = {}) => {
@@ -13,10 +14,19 @@ export const searchByEmail = async (params = {}) => {
 };
 
 export const create = async (params = {}) => {
-  const { password, ...rest } = params;
-  const hashedPassword = await bcrypt.hash(password, 10);
-  const user = new User({ ...rest, password: hashedPassword });
-  return await user.save();
+  try {
+    const { password, ...rest } = params;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = new User({ ...rest, password: hashedPassword });
+    await user.save();
+    
+    const userResponse = { ...user.toJSON(), password: undefined };
+
+    return userResponse;
+  } catch (error) {
+    console.error('Error creating user:', error);
+    throw error;
+  }
 };
 
 export const update = async (params, id) => {
@@ -32,8 +42,9 @@ export const update = async (params, id) => {
     Object.assign(user, params);
 
     await user.save();
-
-    return user;
+    const userResponse = { ...user.toJSON(), password: undefined };
+    return userResponse;
+    
   } catch (error) {
     console.error('Error updating user:', error);
     throw error;
