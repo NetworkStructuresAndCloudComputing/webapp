@@ -4,9 +4,9 @@ import { setErrorResponse, setResponse } from "./response-handler.js";
 
 export const getUser = async (request, response) => {
     try {
-      const { id } = request.params;
-      const user = await userService.searchById({ id });
-  
+      const { username } = request.params;
+      const user = await userService.searchByEmail({ username });
+      
       if (!user) {
         setErrorResponse(404, response);
         return;
@@ -22,7 +22,7 @@ export const getUser = async (request, response) => {
   export const createUser = async (request, response) => {
     try {
         const params = { ...request.body };
-        const existingUser = await userService.searchByEmail({ email: params.email });
+        const existingUser = await userService.searchByEmail({ username: params.username });
         if(existingUser) {
             setErrorResponse('400', response, 'User with the email already exists');
         } else {
