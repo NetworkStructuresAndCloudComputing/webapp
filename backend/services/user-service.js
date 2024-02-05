@@ -7,6 +7,11 @@ export const searchById = async (params = {}) => {
   return user;
 };
 
+export const searchByEmail = async (params = {}) => {
+  const user = await User.findOne({where: {email: params.email}}); // exec returns a promise
+  return user;
+};
+
 export const create = async (params = {}) => {
   const { password, ...rest } = params;
   const hashedPassword = await bcrypt.hash(password, 10);

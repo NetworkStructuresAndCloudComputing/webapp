@@ -19,18 +19,25 @@ export const getUser = async (request, response) => {
   };
   
 
-export const createUser = async (request, response) => {
+  export const createUser = async (request, response) => {
     try {
         const params = { ...request.body };
 
-        const newUser = await userService.create(params);
-        setResponse(newUser,response);
+        const existingUser = await userService.searchByEmail({ email: params.email });
+
+        if(existingUser && Object.keys(existingUser).length){
+            setErrorResponse('400',response);
+        } else {
+            const newUser = await userService.create(params);
+            setResponse(newUser,response);
+        }
        
     } catch (error) {
         console.error(error);
         setErrorResponse('500', response);
     }
 };
+
 
 export const updateUser = async (request, response) => {
     try {
