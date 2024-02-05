@@ -9,14 +9,12 @@ import dotenv from 'dotenv';
 const app = express();
 const PORT = 3000;
 
-// Define your basic authentication credentials
 const basicAuthOptions = {
   users: { [process.env.BASIC_AUTH_USERNAME]: process.env.BASIC_AUTH_PASSWORD }, 
   challenge: true,
   unauthorizedResponse: '', 
 };
 
-// Use basicAuth middleware for authenticated routes
 app.use('/user', basicAuth(basicAuthOptions));
 
 app.use(express.json());
