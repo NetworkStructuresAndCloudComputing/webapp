@@ -9,14 +9,14 @@ export const healthzCheck = async (req, res) => {
     setResponse("",res);
   } catch (error) {
     console.error('Unable to connect to the database:', error);
-    setErrorResponse('503',res);
+    setErrorResponse('503','',res);
   }
 };
 
 export const methodNotAllowed = (req, res) => {
-  setErrorResponse('405',res);
+  setErrorResponse('405','',res);
 };
 
 export const badRequest = (req, res) =>{
-  setErrorResponse('400', res);
+  setErrorResponse('400', '',res);
 };
