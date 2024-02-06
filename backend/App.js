@@ -24,6 +24,7 @@ app.use('/', healthzRoute);
 app.use('/', createUser);
 app.use('/', updateUser);
 
+
 User.sync()
   .then(() => {
     console.log('User model synchronized with the database');
