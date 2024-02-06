@@ -33,7 +33,7 @@ export const setResponse = (data,response) => {
       case '403': {
         response.status(403).json({
           code: "Forbidden",
-          message: errorMessage ? errorMessage : "User already exists.",
+          message: errorMessage ? errorMessage : "Forbidden.",
         });
         break;
       }
