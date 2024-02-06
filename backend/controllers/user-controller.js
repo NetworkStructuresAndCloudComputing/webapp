@@ -1,5 +1,5 @@
 import * as userService from "../services/user-service.js";
-import { setErrorResponse, setResponse } from "./response-handler.js";
+import { setErrorResponse, setResponse, setResponsefor201, setResponsefor204 } from "./response-handler.js";
 
 
 export const getUser = async (request, response) => {
@@ -27,7 +27,7 @@ export const getUser = async (request, response) => {
             setErrorResponse('400', response, 'User with the email already exists');
         } else {
             const newUser = await userService.create(params);
-            setResponse(newUser, response);
+            setResponsefor201(newUser, response);
         }
     } catch (error) {
         console.error(error);
@@ -41,7 +41,7 @@ export const updateUser = async (request, response) => {
         const username = request.params.username;
         const params = { ...request.body };
         const updatedUser = await userService.update(params, username);
-        setResponse(updatedUser,response);
+        setResponsefor204(updatedUser,response);
     } catch (e) {
         console.error(e);
         setErrorResponse('400', response);

@@ -1,7 +1,17 @@
 export const setResponse = (data,response) => {
     response.status(200).json(data);
   };
+
+  export const setResponsefor204 = (data,response) => {
+    response.status(204).json(data);
+  };
   
+
+  export const setResponsefor201 = (data,response) => {
+    response.status(201).json(data);
+  };
+  
+
   export const setErrorResponse = (errorCode,response) => {
    // console.log({errorCode, errorMessage});
     
