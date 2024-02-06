@@ -12,32 +12,50 @@ export const setResponse = (data,response) => {
   };
   
 
-  export const setErrorResponse = (errorCode,response) => {
-   // console.log({errorCode, errorMessage});
+  export const setErrorResponse = (errorCode, errorMessage, response) => {
+    console.log({errorCode, errorMessage});
     
     switch (errorCode) {
       case '400': {
-        response.status(400).send();
+        response.status(400).json({
+          code: "BadRequest",
+          message: errorMessage ? errorMessage : "Invalid request, check the payload.",
+        });
         break;
       }
       case '401': {
-        response.status(401).send();
+        response.status(401).json({
+          code: "UnauthorizedRequest",
+          message: errorMessage ? errorMessage : "User is not authenticated to access the resource.",
+        });
         break;
       }
       case '403': {
-        response.status(403).send();
+        response.status(403).json({
+          code: "Forbidden",
+          message: errorMessage ? errorMessage : "User already exists.",
+        });
+        break;
+      }
+      case '404': {
+        response.status(404).json({
+          code: "BadRequest",
+          message: errorMessage ? errorMessage : "Not Found.",
+        });
         break;
       }
       case '405': {
-        response.status(405).send();
+        response.status(405).json({
+          code: "Forbidden",
+          message: errorMessage ? errorMessage : "Method not allowed.",
+        });
         break;
       }
       case '500': {
-        response.status(500).send();
-        break;
-      }
-      case '503': {
-        response.status(503).send();
+        response.status(500).json({
+          code: "ServicesError",
+          message: errorMessage ? errorMessage : "Error occured while processing your request.",
+        });
         break;
       }
       default:{}

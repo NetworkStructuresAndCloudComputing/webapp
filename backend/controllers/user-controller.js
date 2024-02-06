@@ -8,13 +8,13 @@ export const getUser = async (request, response) => {
       const user = await userService.searchByEmail({ username });
   
       if (!user) {
-        setErrorResponse(404, response);
-        return;
+        setErrorResponse('404','User not found', response);//not working
+        return
       }
       setResponse(user, response);
     } catch (e) {
       console.error(e);
-      setErrorResponse(500, response);
+      setErrorResponse('500',e, response);
     }
   };
   
@@ -24,14 +24,14 @@ export const getUser = async (request, response) => {
         const params = { ...request.body };
         const existingUser = await userService.searchByEmail({ username: params.username });
         if(existingUser) {
-            setErrorResponse('400', response, 'User with the email already exists');
+            setErrorResponse('400','User already exists', response);
         } else {
             const newUser = await userService.create(params);
             setResponsefor201(newUser, response);
         }
     } catch (error) {
         console.error(error);
-        setErrorResponse('500', response);
+        setErrorResponse('500', error, response);
     }
 };
 
@@ -44,7 +44,7 @@ export const updateUser = async (request, response) => {
         setResponsefor204(updatedUser,response);
     } catch (e) {
         console.error(e);
-        setErrorResponse('400', response);
+        setErrorResponse('400','Invalid request, check the payload', response);
     }
 };
 
