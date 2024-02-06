@@ -8,7 +8,7 @@ export const getUser = async (request, response) => {
       const user = await userService.searchByEmail({ username });
   
       if (!user) {
-        setErrorResponse('404','User not found', response);//not working
+        setErrorResponse('404','User not found', response);
         return
       }
       setResponse(user, response);
