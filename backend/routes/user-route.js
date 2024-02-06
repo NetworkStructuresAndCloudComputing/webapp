@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.route("/user/:username").get(userController.getUser);
 
-router.route("/user/:id").put(userController.updateUser);
+router.route("/user/:username").put(userController.updateUser);
 
 router.post('*',invalidErrorController.errorURL);
 

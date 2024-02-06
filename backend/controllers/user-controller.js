@@ -6,7 +6,7 @@ export const getUser = async (request, response) => {
     try {
       const { username } = request.params;
       const user = await userService.searchByEmail({ username });
-      
+  
       if (!user) {
         setErrorResponse(404, response);
         return;
@@ -38,9 +38,9 @@ export const getUser = async (request, response) => {
 
 export const updateUser = async (request, response) => {
     try {
-        const id = request.params.id;
+        const username = request.params.username;
         const params = { ...request.body };
-        const updatedUser = await userService.update(params, id);
+        const updatedUser = await userService.update(params, username);
         setResponse(updatedUser,response);
     } catch (e) {
         console.error(e);

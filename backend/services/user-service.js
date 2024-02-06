@@ -39,7 +39,7 @@ export const create = async (params = {}) => {
   }
 };
 
-export const update = async (params, id) => {
+export const update = async (params, username) => {
   try {
     const allowedFields = ['firstName', 'lastName', 'password'];
     const updatedFields = Object.keys(params);
@@ -53,7 +53,7 @@ export const update = async (params, id) => {
       params.password = await bcrypt.hash(params.password, 10);
     }
 
-    const user = await User.findByPk(id);
+    const user = await User.findOne({ where: { username } });
 
     if (!user) {
       throw new Error('User not found');
