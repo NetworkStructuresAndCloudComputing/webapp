@@ -12,7 +12,8 @@ const basicAuthOptions = {
 
 const basicAuthMiddleware = basicAuth(basicAuthOptions);
 
-router.route("/user/:username").get(basicAuthMiddleware, userController.getUser);
-router.route("/user/:username").put(basicAuthMiddleware, userController.updateUser);
+router.route("/user/:username")
+  .get(basicAuthMiddleware, userController.getUser)
+  .put(basicAuthMiddleware, userController.updateUser);
 
 export default router;
