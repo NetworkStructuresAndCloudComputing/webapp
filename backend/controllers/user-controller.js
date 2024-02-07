@@ -3,21 +3,20 @@ import { setErrorResponse, setResponse, setResponsefor201, setResponsefor204 } f
 
 
 export const getUser = async (request, response) => {
-    try {
-      const { username } = request.params;
-      const user = await userService.searchByEmail({ username });
-  
-      if (!user) {
-        setErrorResponse('404','User not found', response);
-        return
-      }
-      setResponse(user, response);
-    } catch (e) {
-      console.error(e);
-      setErrorResponse('500',e, response);
+  try {
+    const { username } = request;
+    const user = await userService.searchByEmail({ username });
+
+    if (!user) {
+      setErrorResponse('404','User not found', response);
+      return;
     }
-  };
-  
+    setResponse(user, response);
+  } catch (e) {
+    console.error(e);
+    setErrorResponse('404', "Bad Request", response);
+  }
+};
 
   export const createUser = async (request, response) => {
     try {
@@ -31,21 +30,21 @@ export const getUser = async (request, response) => {
         }
     } catch (error) {
         console.error(error);
-        setErrorResponse('500', error, response);
+        setErrorResponse('400','Invalid request, check the payload.', response);
     }
 };
 
 
 export const updateUser = async (request, response) => {
-    try {
-        const username = request.params.username;
-        const params = { ...request.body };
-        const updatedUser = await userService.update(params, username);
-        setResponsefor204(updatedUser,response);
-    } catch (e) {
-        console.error(e);
-        setErrorResponse('400','Invalid request, check the payload', response);
-    }
+  try {
+    const { username } = request;
+    const params = { ...request.body };
+    const updatedUser = await userService.update(params, username);
+    setResponsefor204(updatedUser, response);
+  } catch (e) {
+    console.error(e);
+    setErrorResponse('400', 'Invalid request, check the payload', response);
+  }
 };
 
 
