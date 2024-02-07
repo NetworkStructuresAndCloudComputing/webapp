@@ -13,13 +13,13 @@ Before you begin, ensure you have met the following requirements:
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/your-username/your-repo.git
+    git clone https://github.com/MohammedZakirMemon/webapp.git
     ```
 
 2. Navigate to the project directory:
 
     ```bash
-    cd your-repo
+    cd webapp
     ```
 
 3. Install dependencies:
@@ -33,13 +33,8 @@ Before you begin, ensure you have met the following requirements:
     - Create a MySQL database.
     - Update the database configuration in `config.js` or `.env` file with your MySQL database credentials.
 
-5. Run database migrations:
 
-    ```bash
-    npm run migrate
-    ```
-
-6. Set environment variables:
+5. Set environment variables:
 
     Create a `.env` file in the root directory and add the following:
 
