@@ -6,17 +6,17 @@ export const healthzCheck = async (req, res) => {
   try {
     await sequelize.authenticate();
     console.log('Connection has been established successfully.');
-    setResponse("",res);
+    res.status(200).send();
   } catch (error) {
     console.error('Unable to connect to the database:', error);
-    setErrorResponse('503','',res);
+    res.status(503).send();
   }
 };
 
 export const methodNotAllowed = (req, res) => {
-  setErrorResponse('405','',res);
+  res.status(405).send();
 };
 
 export const badRequest = (req, res) =>{
-  setErrorResponse('400', '',res);
+  res.status(400).send();
 };
