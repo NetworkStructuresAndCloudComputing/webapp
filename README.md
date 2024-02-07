@@ -51,7 +51,7 @@ Before you begin, ensure you have met the following requirements:
 To run the application locally, use the following command:
 
 ```bash
-npm start
+node App.js
 ```
 
 ## Reference 
