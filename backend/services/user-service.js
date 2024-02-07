@@ -25,9 +25,14 @@ export const searchByEmail = async (params = {}) => {
 
 export const create = async (params = {}) => {
   try {
-    const { password, ...rest } = params;
+    const { username, password, ...rest } = params;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(username)) {
+      throw new Error('Invalid email address for username');
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new User({ ...rest, password: hashedPassword });
+    const user = new User({ ...rest, username, password: hashedPassword });
     await user.save();
     
     const userResponse = { ...user.toJSON(), password: undefined };
@@ -38,6 +43,7 @@ export const create = async (params = {}) => {
     throw error;
   }
 };
+
 
 export const update = async (params, username) => {
   try {
