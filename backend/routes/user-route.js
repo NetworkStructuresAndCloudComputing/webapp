@@ -11,7 +11,6 @@ router.route("/v1/user/self")
   .get(userController.getUser)
   .put(userController.updateUser);
 
-router.all("*",
-  invalidErrorController.errorURL);
+router.all("*",invalidErrorController.errorURL);
 
 export default router;
