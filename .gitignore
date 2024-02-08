@@ -135,3 +135,6 @@ dist
 .DS_Store
 .DS_Store
 **/.DS_Store
+
+#Ignore folder mac
+.DS_Store
