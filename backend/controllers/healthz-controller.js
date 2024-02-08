@@ -1,6 +1,5 @@
 
 import { sequelize } from '../services/database-service.js';
-import { setErrorResponse,setResponse } from './response-handler.js';
 
 export const healthzCheck = async (req, res) => {
   try {

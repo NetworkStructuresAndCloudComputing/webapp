@@ -1,6 +1,6 @@
 import User from "../models/user.js"
 import bcrypt from 'bcrypt';
-import { setErrorResponse, setResponse } from "./response-handler.js";
+import { setErrorResponse } from "./response-handler.js";
 
 const checkAuth = async (req, res, next) => {
     if (!req.get('Authorization')) {
