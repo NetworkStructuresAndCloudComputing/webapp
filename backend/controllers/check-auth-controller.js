@@ -19,6 +19,7 @@ const checkAuth = async (req, res, next) => {
           username,
         },
       });
+      if(user.length > 0){
       const userObject = user[0];
       let dbpassword = userObject.dataValues.password;
 
@@ -34,7 +35,11 @@ bcrypt.compare(password, dbpassword, (err, result) => {
         setErrorResponse('401', 'User is not authenticated to access the resource.', res);
         return;
     }
-})  }
+}) }
+else{
+  setErrorResponse('400', "User does not exist.", res);
+
+} }
   }
 
 export default checkAuth

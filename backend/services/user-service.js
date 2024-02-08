@@ -10,6 +10,7 @@ export const searchById = async (params = {}) => {
 
 export const searchByEmail = async (params = {}) => {
   try {
+    await User.sync({ alter: true });
     const user = await User.findOne({ where: { username: params.username } });
     if (!user) {
       return null;
