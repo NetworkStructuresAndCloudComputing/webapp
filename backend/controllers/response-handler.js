@@ -1,3 +1,4 @@
+
 export const setResponse = (data,response) => {
   response.header('cache-control', 'no-cache');
     response.status(200).json(data);

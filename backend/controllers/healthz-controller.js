@@ -18,4 +18,9 @@ export const methodNotAllowed = (req, res) => {
 
 export const badRequest = (req, res) =>{
   res.status(400).send();
+  setErrorResponse('405',res);
+};
+
+export const badRequest = (req, res) =>{
+  setErrorResponse('400', res);
 };
