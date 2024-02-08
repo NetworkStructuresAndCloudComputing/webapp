@@ -1,5 +1,6 @@
 
 import { sequelize } from '../services/database-service.js';
+import { setErrorResponse,setResponse } from './response-handler.js';
 
 export const healthzCheck = async (req, res) => {
   try {
@@ -18,9 +19,4 @@ export const methodNotAllowed = (req, res) => {
 
 export const badRequest = (req, res) =>{
   res.status(400).send();
-  setErrorResponse('405',res);
-};
-
-export const badRequest = (req, res) =>{
-  setErrorResponse('400', res);
 };
