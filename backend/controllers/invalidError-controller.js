@@ -1,3 +1,3 @@
 export const errorURL = async (req, res) => {
-    res.status(400).send();
+    res.status(405).send();
   }

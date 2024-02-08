@@ -5,9 +5,9 @@ import express from "express";
 
 const router = express.Router();
 
-router.use("/user/self", checkAuth);
+router.use("/v1/user/self", checkAuth);
 
-router.route("/user/self")
+router.route("/v1/user/self")
   .get(userController.getUser)
   .put(userController.updateUser);
 

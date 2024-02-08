@@ -26,7 +26,8 @@ export const searchByEmail = async (params = {}) => {
 export const create = async (params = {}) => {
   try {
     const { username, password, ...rest } = params;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
     if (!emailRegex.test(username)) {
       throw new Error('Invalid email address for username');
     }
