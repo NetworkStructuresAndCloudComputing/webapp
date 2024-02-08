@@ -3,7 +3,6 @@ import healthzRoute from './routes/healthz-route.js';
 import createUser from './routes/register-route.js';
 import User from './models/user.js';
 import updateUser from './routes/user-route.js';
-import dotenv from 'dotenv';
 
 const app = express();
 const PORT = 3000;
