@@ -128,3 +128,13 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# macOS system file
+.DS_Store
+.DS_Store
+.DS_Store
+.DS_Store
+**/.DS_Store
+
+#Ignore folder mac
+.DS_Store
