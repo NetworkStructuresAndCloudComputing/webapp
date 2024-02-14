@@ -28,6 +28,10 @@ export const create = async (params = {}) => {
   try {
     const { username, password, ...rest } = params;
 
+    if (!password) {
+      throw new Error('Password cannot be empty');
+    }
+
     const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
     if (!emailRegex.test(username)) {
       throw new Error('Invalid email address for username');
@@ -59,6 +63,10 @@ export const update = async (params, username) => {
 
     if (params.password) {
       params.password = await bcrypt.hash(params.password, 10);
+    }
+
+    if ('password' in params && params.password === '') {
+      throw new Error('Password cannot be empty');
     }
 
     const user = await User.findOne({ where: { username } });
