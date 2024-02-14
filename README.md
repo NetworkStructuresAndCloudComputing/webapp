@@ -55,6 +55,7 @@ node App.js
 ## Reference 
 1. https://www.youtube.com/watch?v=btWo1jxFwp8
 2. https://sequelize.org/docs/v6/other-topics/legacy/
+3. https://medium.com/@selvarajchinnasamyks/how-to-write-an-integration-test-for-node-js-application-4a2f4140665f
 
 
 ## Author
