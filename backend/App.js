@@ -24,3 +24,5 @@ User.sync()
   .catch((error) => {
     console.error('Error synchronizing User model with the database:', error);
   });
+
+  export default app;
