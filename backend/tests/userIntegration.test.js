@@ -1,9 +1,10 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import { expect } from 'chai';
 import supertest from 'supertest';
 import app from '../App.js';
 import { Buffer } from 'buffer';
-import dotenv from 'dotenv';
-dotenv.config();
+
 
 const request = supertest(app);
 
@@ -11,11 +12,10 @@ function encodeBasicAuth(username, password) {
   const credentials = Buffer.from(`${username}:${password}`);
   return 'Basic ' + credentials.toString('base64');
 }
-console.log('Loaded environment variables:', process.env);
 
 describe('User Endpoint Integration Tests', () => {
   let createdUserId;
-  const testUsername = 'anzalshaikh24@example.comm';
+  const testUsername = 'anzalshaikh25@example.comm';
   const testPassword = '123';
   const testFirstName = 'mohammed';
   const testLastName = "khan";
