@@ -1,9 +1,6 @@
 name: Integration Tests
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
@@ -37,8 +34,7 @@ jobs:
 
       - name: Run Integration Tests
         env:
-          DB_HOST: 127.0.0.1
-          DB_PORT: 3306
+          HOST: 127.0.0.1
           DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
           DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
