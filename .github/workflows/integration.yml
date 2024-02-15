@@ -17,7 +17,7 @@ jobs:
           MYSQL_DATABASE: "CloudComputing"
         ports:
           - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=3s --health-retries=2
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       - name: Checkout repository
