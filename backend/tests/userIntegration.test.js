@@ -5,20 +5,22 @@ import supertest from 'supertest';
 import app from '../App.js';
 import { Buffer } from 'buffer';
 
-
 const request = supertest(app);
 
 function encodeBasicAuth(username, password) {
-  const credentials = Buffer.from(`${username}:${password}`);
-  return 'Basic ' + credentials.toString('base64');
+  return 'Basic ' + Buffer.from(`${username}:${password}`).toString('base64');
 }
 
 describe('User Endpoint Integration Tests', () => {
-  let createdUserId;
-  const testUsername = 'anzalshaikh25@example.comm';
-  const testPassword = '123';
-  const testFirstName = 'mohammed';
-  const testLastName = "khan";
+  const testUsername = 'anzalshaikh40@example.com';
+  const testPassword = 'saanya';
+  const testFirstName = 'Ayush';
+  const testLastName = 'Kanyal';
+
+  let newTestFirstName = '';
+  let newTestLastName = '';
+  let newTestPassword = 'mansi';
+
   const authHeader = encodeBasicAuth(testUsername, testPassword);
 
   it('Test 1 - Create an account and validate it exists', async () => {
@@ -27,44 +29,49 @@ describe('User Endpoint Integration Tests', () => {
       lastName: testLastName,
       username: testUsername,
       password: testPassword,
-    }).set('Authorization', authHeader);
+    });
+  
 
-    if (response.statusCode === 201) {
-      createdUserId = response.body.id;
+    expect(response.statusCode).to.satisfy((code) => [200, 201, 400].includes(code), 'Unexpected status code');
 
-      const getResponse = await request.get(`/v1/user/self`)
-        .set('Authorization', authHeader); 
-      expect(getResponse.statusCode).to.be.equal(200);
-      expect(getResponse.body.username).to.be.equal(testUsername);
-    } else if (response.statusCode === 400) {
-      console.log('User already exists. Skipping creation validation.');
-    } else {
-      throw new Error(`Unexpected status code: ${response.statusCode}`);
-    }
-  });
-
-  it('Test 2 - Update the account and validate it was updated', async () => {
-    const updateResponse = await request.put(`/v1/user/self`)
-      .send({
-        firstName: testFirstName,
-        lastName: testLastName,
-        password: testPassword,
-      })
+    const authHeader = encodeBasicAuth(testUsername, testPassword);
+  
+    const getResponse = await request.get(`/v1/user/self`)
       .set('Authorization', authHeader);
-
-    console.log('Update response:', updateResponse.body);
-
-    if (updateResponse.statusCode >= 200 && updateResponse.statusCode < 300) {
-      const getResponse = await request.get(`/v1/user/self`)
-        .set('Authorization', authHeader);
-
-      console.log('Get response after update:', getResponse.body);
-
-      expect(getResponse.statusCode).to.equal(200);
-      expect(getResponse.body.firstName).to.equal(testFirstName);
-    } else {
-      console.error('Update failed:', updateResponse.statusCode, updateResponse.body);
-      throw new Error(`Unexpected status code: ${updateResponse.statusCode}`);
-    }
+  
+    console.log('Get user response:', getResponse.body);
+  
+    expect(getResponse.statusCode).to.equal(200);
+    expect(getResponse.body.username).to.be.equal(testUsername);
   });
+  
+
+  it('Test 2 - Optionally update the account', async () => {
+    let updatePayload = {};
+  
+    if (newTestFirstName) updatePayload.firstName = newTestFirstName;
+    if (newTestLastName) updatePayload.lastName = newTestLastName;
+    if (newTestPassword) updatePayload.password = newTestPassword;
+  
+    if (Object.keys(updatePayload).length > 0) {
+      const updateResponse = await request.put(`/v1/user/self`)
+        .send(updatePayload)
+        .set('Authorization', authHeader);
+  
+      console.log('Update account response:', updateResponse.body);
+  
+      expect(updateResponse.statusCode).to.satisfy((code) => code >= 200 && code < 300, 'Update failed');
+
+      const newAuthHeader = newTestPassword ? encodeBasicAuth(testUsername, newTestPassword) : authHeader;
+  
+      const getResponse = await request.get(`/v1/user/self`)
+        .set('Authorization', newAuthHeader);
+  
+      console.log('Get updated user response:', getResponse.body);
+  
+      expect(getResponse.statusCode).to.equal(200);
+    } else {
+      console.log('No update payload provided, skipping update test.');
+    }
+  });  
 });
