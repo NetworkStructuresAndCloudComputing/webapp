@@ -13,21 +13,27 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '14'
-
-      - name: Install wait-on
-        run: npm install -g wait-on
+      - name: Install MySQL
+        run: |
+          sudo apt-get update -qy
+          sudo apt-get install -qy mysql-client
 
       - name: Debug MySQL Connection
         run: mysql --host=127.0.0.1 --user=${{ secrets.DATABASE_USERNAME }} --password=${{ secrets.DATABASE_PASSWORD }} --port=3306 -e "SHOW DATABASES;"
 
-      - name: Wait for MySQL to be ready
-        run: wait-on tcp:127.0.0.1:3306
+      - name: Start MySQL Server
+        run: |
+          sudo service mysql start
+          wait-on tcp:127.0.0.1:3306
 
-      - name: Install Node.js dependencies
+      - name: Create MySQL Database and User
+        run: |
+          mysql --host=127.0.0.1 --user=root --password=${{ secrets.DATABASE_PASSWORD }} --port=3306 -e "CREATE DATABASE IF NOT EXISTS ${{ secrets.DATABASE_NAME }};"
+          mysql --host=127.0.0.1 --user=root --password=${{ secrets.DATABASE_PASSWORD }} --port=3306 -e "CREATE USER IF NOT EXISTS '${{ secrets.DATABASE_USERNAME }}'@'localhost' IDENTIFIED BY '${{ secrets.DATABASE_PASSWORD }}';"
+          mysql --host=127.0.0.1 --user=root --password=${{ secrets.DATABASE_PASSWORD }} --port=3306 -e "GRANT ALL PRIVILEGES ON ${{ secrets.DATABASE_NAME }}.* TO '${{ secrets.DATABASE_USERNAME }}'@'localhost';"
+          mysql --host=127.0.0.1 --user=root --password=${{ secrets.DATABASE_PASSWORD }} --port=3306 -e "FLUSH PRIVILEGES;"
+
+      - name: Install dependencies
         run: npm install
 
       - name: Run integration tests
