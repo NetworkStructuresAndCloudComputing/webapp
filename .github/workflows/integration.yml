@@ -13,8 +13,8 @@ jobs:
       mysql:
         image: mysql:latest
         env:
-          MYSQL_ROOT_PASSWORD: "${{secrets.DB_PASSWORD}}"
-          MYSQL_DATABASE: "${{secrets.DATABASE}}"
+          MYSQL_ROOT_PASSWORD: "2108786Z@kir"
+          MYSQL_DATABASE: "CloudComputing"
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
@@ -29,7 +29,7 @@ jobs:
       - name: Run integration tests
         env:
           HOST: 127.0.0.1
-          DB_USERNAME: "${{secrets.DB_USERNAME}}"
-          DB_PASSWORD: "${{secrets.DB_PASSWORD}}"
-          DATABASE: "${{secrets.DATABASE}}"
+          DB_USERNAME: "root"
+          DB_PASSWORD: "2108786Z@kir"
+          DATABASE: "CloudComputing"
         run: npm run integration-test
