@@ -13,6 +13,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Install wait-on
+        run: npm install -g wait-on
+
+      - name: Wait for MySQL server
+        run: wait-on tcp:127.0.0.1:3306
+
       - name: Install dependencies
         run: npm install
 
