@@ -1,12 +1,15 @@
 name: Integration Tests
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     branches:
       - main
 
 jobs:
-  test:
+  integration-tests:
     runs-on: ubuntu-latest
 
     services:
@@ -15,21 +18,29 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
           MYSQL_DATABASE: ${{ secrets.DATABASE_NAME }}
+          MYSQL_USER: ${{ secrets.DATABASE_USERNAME }}
+          MYSQL_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
         ports:
           - 3306:3306
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '14'
 
       - name: Install dependencies
         run: npm install
 
-      - name: Run integration tests
+      - name: Run Integration Tests
         env:
-          HOST: 127.0.0.1
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
           DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
           DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+          DB_DIALECT: mysql
         run: npm run integration-test
-
