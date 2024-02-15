@@ -17,7 +17,6 @@ jobs:
           MYSQL_DATABASE: "CloudComputing"
         ports:
           - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       - name: Checkout repository
@@ -31,5 +30,5 @@ jobs:
           HOST: 127.0.0.1
           DB_USERNAME: "root"
           DB_PASSWORD: "2108786Z@kir"
-          DATABASE: "CloudComputing"
+          DATABASE: CloudComputing
         run: npm run integration-test
