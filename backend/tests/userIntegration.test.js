@@ -12,14 +12,14 @@ function encodeBasicAuth(username, password) {
 }
 
 describe('User Endpoint Integration Tests', () => {
-  const testUsername = 'anzalshaikh40@example.com';
+  const testUsername = 'anzalshaikh50@example.com';
   const testPassword = 'saanya';
   const testFirstName = 'Ayush';
   const testLastName = 'Kanyal';
 
   let newTestFirstName = '';
   let newTestLastName = '';
-  let newTestPassword = 'mansi';
+  let newTestPassword = '';
 
   const authHeader = encodeBasicAuth(testUsername, testPassword);
 
@@ -46,7 +46,7 @@ describe('User Endpoint Integration Tests', () => {
   });
   
 
-  it('Test 2 - Optionally update the account', async () => {
+  it('Test 2 - Update the account and validate it was updated', async () => {
     let updatePayload = {};
   
     if (newTestFirstName) updatePayload.firstName = newTestFirstName;
