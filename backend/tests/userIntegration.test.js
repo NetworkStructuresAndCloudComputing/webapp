@@ -74,4 +74,7 @@ describe('User Endpoint Integration Tests', () => {
       console.log('No update payload provided, skipping update test.');
     }
   });  
+    after(() => {
+    process.exit(0); 
+ });
 });
