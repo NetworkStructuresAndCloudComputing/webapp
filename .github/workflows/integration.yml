@@ -13,10 +13,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+
       - name: Install wait-on
         run: npm install -g wait-on
 
-      - name: Install dependencies
+      - name: Wait for MySQL to be ready
+        run: wait-on tcp:127.0.0.1:3306
+
+      - name: Install Node.js dependencies
         run: npm install
 
       - name: Run integration tests
