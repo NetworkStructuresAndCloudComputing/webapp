@@ -13,9 +13,9 @@ jobs:
       mysql:
         image: mysql:8
         env:
-          MYSQL_DATABASE: ${{ secrets.DATABASE_NAME }}
-          MYSQL_USER: ${{ secrets.DATABASE_USERNAME }}
-          MYSQL_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          MYSQL_DATABASE: CloudComputing
+          MYSQL_USER: root
+          MYSQL_PASSWORD: 2108786Z@kir
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
@@ -23,9 +23,9 @@ jobs:
     steps:
       - name: Set up Environment Variables
         run: |
-          echo "DATABASE_NAME=${{ secrets.DATABASE_NAME }}" >> $GITHUB_ENV
-          echo "DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}" >> $GITHUB_ENV
-          echo "DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}" >> $GITHUB_ENV
+          echo "MYSQL_DATABASE: CloudComputing" 
+          echo " MYSQL_USER: root"
+          echo " MYSQL_PASSWORD: 2108786Z@kir"
 
       - name: Checkout Repository
         uses: actions/checkout@v2
