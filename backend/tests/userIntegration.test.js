@@ -1,8 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
-import chai from 'chai';
-const { expect } = chai;
 import supertest from 'supertest';
+import { expect } from 'chai'; 
 import app from '../App.js';
 import { Buffer } from 'buffer';
 
@@ -13,7 +12,7 @@ function encodeBasicAuth(username, password) {
 }
 
 describe('User Endpoint Integration Tests', () => {
-  const testUsername = 'anzalshaikh50@example.com';
+  const testUsername = 'anzalshaikh00@example.com';
   const testPassword = 'saanya';
   const testFirstName = 'Ayush';
   const testLastName = 'Kanyal';
