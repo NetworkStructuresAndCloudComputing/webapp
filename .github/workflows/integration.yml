@@ -9,27 +9,35 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    services:
-      mysql:
-        image: mysql:latest
-        env:
-          MYSQL_ROOT_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-          MYSQL_DATABASE: ${{ secrets.DATABASE_NAME }}
-        ports:
-          - 3306:3306
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '14'
+
       - name: Install dependencies
         run: npm install
 
-      - name: Run integration tests
+      - name: Start MySQL Server
+        run: sudo service mysql start
+
+      - name: Wait for MySQL to start
+        run: |
+          while ! mysqladmin ping -h127.0.0.1 --silent; do
+            sleep 1
+          done
+
+      - name: Initialize Database
+        run: |
+          mysql --host=127.0.0.1 --user=${{ secrets.DATABASE_USERNAME }} --password=${{ secrets.DATABASE_PASSWORD }} --port=3306 -e "CREATE DATABASE IF NOT EXISTS YOUR_DATABASE;"
+
+      - name: Run Integration Tests
         env:
           HOST: 127.0.0.1
           DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
           DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
         run: npm run integration-test
-
