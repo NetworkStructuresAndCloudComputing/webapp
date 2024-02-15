@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
-import { expect } from 'chai';
+import chai from 'chai';
+const { expect } = chai;
 import supertest from 'supertest';
 import app from '../App.js';
 import { Buffer } from 'buffer';
