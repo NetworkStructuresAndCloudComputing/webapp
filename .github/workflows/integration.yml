@@ -9,6 +9,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node-version: [14]  # Adjust the node version based on your application requirements
+
     services:
       mysql:
         image: mysql:latest
@@ -17,14 +21,25 @@ jobs:
           MYSQL_DATABASE: "CloudComputing"
         ports:
           - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+        options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=3s --health-retries=2
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.npm
+            ~/.cache
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
       - name: Install dependencies
         run: npm install
+
+      - name: Wait for Database
+        run: npm run wait-for-db
 
       - name: Run integration tests
         env:
