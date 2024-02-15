@@ -21,6 +21,9 @@ jobs:
       - name: Install wait-on
         run: npm install -g wait-on
 
+      - name: Debug MySQL Connection
+        run: mysql --host=127.0.0.1 --user=${{ secrets.DATABASE_USERNAME }} --password=${{ secrets.DATABASE_PASSWORD }} --port=3306 -e "SHOW DATABASES;"
+
       - name: Wait for MySQL to be ready
         run: wait-on tcp:127.0.0.1:3306
 
