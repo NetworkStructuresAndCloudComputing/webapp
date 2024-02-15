@@ -22,13 +22,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Debug Secret Values
+        run: |
+          echo "DB_USERNAME: ${{ secrets.DATABASE_USERNAME }}"
+          echo "DB_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}"
+          echo "DATABASE: ${{ secrets.DATABASE_NAME }}"
+
       - name: Install dependencies
         run: npm install
-
-      - name: Wait for MySQL container
-        run: |
-          npm install -g wait-on
-          wait-on tcp:127.0.0.1:3306
 
       - name: Run integration tests
         env:
