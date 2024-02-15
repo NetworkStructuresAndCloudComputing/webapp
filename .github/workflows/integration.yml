@@ -1,12 +1,14 @@
 name: Integration Tests
 
-on: [pull_request]
+on:
+  pull_request:
+    branches:
+      - main
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
-    
     services:
       mysql:
         image: mysql:latest
@@ -16,7 +18,7 @@ jobs:
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-        
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
