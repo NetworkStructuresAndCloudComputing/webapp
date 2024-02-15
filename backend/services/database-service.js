@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const sequelize = new Sequelize(process.env.DATABASE_NAME, process.env.DATABASE_USERNAME, process.env.DATABASE_PASSWORD,{
+const sequelize = new Sequelize('CloudComputing','root', '2108786Z@kir',{
   host: 'localhost',
   dialect: 'mysql',
 });
