@@ -1,8 +1,8 @@
 {
   "type": "module",
   "scripts": {
-    "integration-test": " mocha ./backend/tests/userIntegration.test.js"
-  },
+    "integration-test": "mocha --experimental-vm-modules ./backend/tests/userIntegration.test.mjs"
+  },  
   "dependencies": {
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.4",
