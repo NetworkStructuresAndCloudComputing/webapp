@@ -28,6 +28,11 @@ jobs:
           echo "DB_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}"
           echo "DATABASE: ${{ secrets.DATABASE_NAME }}"
 
+      - name: Wait for MySQL container
+        run: |
+          npm install -g wait-on
+          wait-on tcp:127.0.0.1:3306
+
       - name: Install dependencies
         run: npm install
 
@@ -38,3 +43,4 @@ jobs:
           DB_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
           DATABASE: ${{ secrets.DATABASE_NAME }}
         run: npm run integration-test
+
