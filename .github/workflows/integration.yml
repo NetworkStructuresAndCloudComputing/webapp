@@ -32,7 +32,7 @@ jobs:
 
       - name: Initialize Database
         run: |
-          mysql --host=127.0.0.1 --user=${{ secrets.DATABASE_USERNAME }} --password=${{ secrets.DATABASE_PASSWORD }} --port=3306 -e "CREATE DATABASE IF NOT EXISTS YOUR_DATABASE;"
+          mysql --host=127.0.0.1 --user=root --password=2108786Z@kir --port=3306 -e "CREATE DATABASE IF NOT EXISTS YOUR_DATABASE;"
 
       - name: Run Integration Tests
         env:
