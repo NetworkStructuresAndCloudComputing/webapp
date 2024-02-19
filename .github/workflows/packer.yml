@@ -7,9 +7,7 @@ on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   pull_request:
     branches: [ "main" ]
-    paths:
-      - '../backend/packer.pkr.hcl/' 
-
+    
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -36,11 +34,11 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Packer fmt
         run: |
-          cd packer-template
-          packer fmt -check
+          cd backend
+          packer fmt packer.pkr.hcl
 
       # Runs a set of commands using the runners shell
       - name: Packer validate
         run: |
-          cd packer-template
-          packer validate
+          cd backend
+          packer validate packer.pkr.hcl
