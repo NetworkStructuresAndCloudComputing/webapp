@@ -5,7 +5,6 @@
     ssh_username      = "centos"
     image_family      = "custom-images"
     zone              = "us-east1-b"
-    credentials_file  = "/Users/zakirmemon/Downloads/cloudcomputing-414020-d5bd516e8358.json"
   }
 
   build {
