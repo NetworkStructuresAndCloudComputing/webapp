@@ -41,8 +41,8 @@ describe('User Endpoint Integration Tests', () => {
   
     console.log('Get user response:', getResponse.body);
   
-    expect(getResponse.statusCode).to.equal(400);
-    expect(getResponse.body.username).to.be.equal("testUsername");
+    expect(getResponse.statusCode).to.equal(200);
+    expect(getResponse.body.username).to.be.equal(testUsername);
   });
   
 
@@ -74,7 +74,11 @@ describe('User Endpoint Integration Tests', () => {
       console.log('No update payload provided, skipping update test.');
     }
   });  
-    after(() => {
-    process.exit(0); 
+  after(() => {
+    // Check if any test failed and exit with code 1 if true
+    if (this.test.parent.tests.some(test => test.state === 'failed')) {
+      console.error('Integration tests failed. Exiting with code 1.');
+      process.exit(1);
+    }
  });
 });
