@@ -36,5 +36,10 @@ jobs:
           DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
           DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
-        run: npm run integration-test
+        run: |
+         npm run integration-test
+         if [ $? -ne 0 ]; then
+          echo "Integration tests failed. Exiting with code 1."
+          exit 1
+         fi
 
