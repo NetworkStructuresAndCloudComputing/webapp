@@ -15,24 +15,24 @@ build {
   }
 
   provisioner "file" {
-    source      = "./webapp"
-    destination = "/tmp/webapp"
-  }
+  source      = "${path.cwd}/webapp"
+  destination = "/tmp/webapp"
+}
 
-  provisioner "file" {
-    source      = "${path.cwd}/.env"
-    destination = "/tmp/webapp/.env"
-  }
+provisioner "file" {
+  source      = "${path.cwd}/.env"
+  destination = "/tmp/webapp/.env"
+}
 
-   provisioner "file" {
-    source      = "${path.cwd}/.env"
-    destination = "/tmp/webapp/backend/.env"
-  }
+provisioner "file" {
+  source      = "${path.cwd}/.env"
+  destination = "/tmp/webapp/backend/.env"
+}
 
-  provisioner "file" {
-    source      = "./csye6225.service"
-    destination = "/tmp/csye6225.service"
-  }
+provisioner "file" {
+  source      = "${path.cwd}/csye6225.service"
+  destination = "/tmp/csye6225.service"
+}
 
   provisioner "shell" {
     inline = [
