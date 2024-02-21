@@ -32,7 +32,7 @@ describe('User Endpoint Integration Tests', () => {
     });
   
 
-    expect(response.statusCode).to.satisfy((code) => [200, 201, 400].includes(code), 'Unexpected status code');
+    expect(response.statusCode).to.satisfy((code) => [200, 201].includes(code), 'Unexpected status code');
 
     const authHeader = encodeBasicAuth(testUsername, testPassword);
   
@@ -42,7 +42,7 @@ describe('User Endpoint Integration Tests', () => {
     console.log('Get user response:', getResponse.body);
   
     expect(getResponse.statusCode).to.equal(400);
-    expect(getResponse.body.username).to.be.equal(testUsername);
+    expect(getResponse.body.username).to.be.equal("testUsername");
   });
   
 
