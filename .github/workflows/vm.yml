@@ -29,17 +29,6 @@ jobs:
         with:
           credentials_json: '${{secrets.GOOGLE_CREDENTIALS}}'
 
-      - name: Setup Environment File
-        run: |
-          cat << EOF > development.env
-          DATABASE_NAME=${{ secrets.DATABASE_NAME }}
-          DATABASE_PORT=${{ secrets.DATABASE_PORT }}
-          HOST=${{ secrets.DATABASE_HOST }}
-          DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}
-          DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}
-          EOF
-        shell: bash
-
       - name: Install Packer
         run: |
           curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
