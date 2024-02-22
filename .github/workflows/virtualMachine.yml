@@ -54,4 +54,5 @@ jobs:
       - name: Build Custom Image with Packer
         run: |
           cd backend
+          echo "Building custom image with Packer"
           packer build packer.pkr.hcl
