@@ -20,11 +20,6 @@ build {
   }
 
   provisioner "file" {
-    source      = "./.env"
-    destination = "/tmp/.env"
-  }
-
-  provisioner "file" {
     source      = "./csye6225.service"
     destination = "/tmp/csye6225.service"
   }
