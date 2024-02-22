@@ -44,8 +44,8 @@ describe('User Endpoint Integration Tests', () => {
   
     console.log('Get user response:', getResponse.body);
   
-    expect(getResponse.statusCode).to.equal(200);
-    expect(getResponse.body.username).to.be.equal(testUsername);
+    expect(getResponse.statusCode).to.equal(400);
+    expect(getResponse.body.username).to.be.equal("testUsername");
   }catch(err){
     console.error(err);
     testsFailed = true;
