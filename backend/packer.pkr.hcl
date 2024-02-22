@@ -1,3 +1,12 @@
+packer {
+  required_plugins {
+    googlecompute = {
+      version = "1.1.4" 
+      source  = "github.com/hashicorp/googlecompute"
+    }
+  }
+}
+
 source "googlecompute" "custom-image" {
   project_id          = "cloudcomputing-414020"
   source_image_family = "centos-stream-8"
