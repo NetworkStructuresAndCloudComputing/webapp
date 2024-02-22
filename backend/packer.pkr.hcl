@@ -7,6 +7,23 @@ source "googlecompute" "custom-image" {
   zone                = "us-east1-b"
 }
 
+# Set default values for the variables from your .env file
+variable "database_username" {
+  default = "root"
+}
+
+variable "database_password" {
+  default = "2108786Z@kir"
+}
+
+variable "database_name" {
+  default = "CloudComputing"
+}
+
+variable "google_application_credentials" {
+  default = "/Users/zakirmemon/Downloads/cloudcomputing-414020-d5bd516e8358.json"
+}
+
 build {
   sources = ["source.googlecompute.custom-image"]
 
@@ -19,12 +36,12 @@ build {
     destination = "/tmp/webapp"
   }
 
-  provisioner "--env-file" {
+  provisioner "file" {
     source      = ".env"
     destination = "/tmp/webapp/.env"
   }
 
-  provisioner "--env-file" {
+  provisioner "file" {
     source      = ".env"
     destination = "/tmp/webapp/backend/.env"
   }
@@ -43,6 +60,12 @@ build {
       "sudo chown -R csye6225:csye6225 /home",
       "sudo systemctl daemon-reload",
       "sudo systemctl enable csye6225.service",
+
+      # Use the variables in the shell script
+      "export DATABASE_USERNAME=${var.database_username}",
+      "export DATABASE_PASSWORD=${var.database_password}",
+      "export DATABASE_NAME=${var.database_name}",
+      "export GOOGLE_APPLICATION_CREDENTIALS=${var.google_application_credentials}",
     ]
   }
 }
