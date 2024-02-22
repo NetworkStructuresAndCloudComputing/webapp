@@ -15,7 +15,7 @@ jobs:
 
       - name: Run Integration Test
         run: |
-          ./packer-script.sh
+          ./integration-test.sh
         continue-on-error: true
 
   build-artifact:
@@ -26,18 +26,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Install Node.js
-        run: |
-          curl -fsSL https://deb.nodesource.com/setup_18.x -o nodesource_setup.sh
-          sudo bash nodesource_setup.sh
-          sudo apt-get install -y nodejs
-
-      - name: Install MySQL Server
-        run: |
-          sudo apt-get install -y mysql-server
-          sudo systemctl enable mysql
-
-      - name: Install Application Dependencies
+      - name: Build Application Artifact
         run: npm install
 
       - name: Create .env File
@@ -51,12 +40,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: init for Custom Image with Packer
+      - name: Init for Custom Image with Packer
         run: |
           cd backend
-          echo "init for Custom Image with Packer"
-          packer init packer.pkr.hcl
-
+          echo "Init for Custom Image with Packer"
+          packer init .
 
       - name: Build Custom Image with Packer
         run: |
