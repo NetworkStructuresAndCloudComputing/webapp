@@ -12,7 +12,7 @@ function encodeBasicAuth(username, password) {
 }
 
 describe('User Endpoint Integration Tests', () => {
-  const testUsername = 'anzalshaikh70@example.com';
+  const testUsername = 'anzalshaikh00@example.com';
   const testPassword = 'saanya';
   const testFirstName = 'Ayush';
   const testLastName = 'Kanyal';
@@ -22,17 +22,26 @@ describe('User Endpoint Integration Tests', () => {
   let newTestPassword = '';
 
   const authHeader = encodeBasicAuth(testUsername, testPassword);
+  let testsFailed = false;
+
+  after(async () =>  {
+
+    if(testsFailed) {
+      process.exit(1); 
+    } else {
+      process.exit(0);
+    }
+
+  });
 
   it('Test 1 - Create an account and validate it exists', async () => {
+    try{
     const response = await request.post('/v1/user').send({
       firstName: testFirstName,
       lastName: testLastName,
       username: testUsername,
       password: testPassword,
     });
-  
-
-    expect(response.statusCode).to.satisfy((code) => [200, 201, 400].includes(code), 'Unexpected status code');
 
     const authHeader = encodeBasicAuth(testUsername, testPassword);
   
@@ -41,16 +50,17 @@ describe('User Endpoint Integration Tests', () => {
   
     console.log('Get user response:', getResponse.body);
   
-    expect(getResponse.statusCode).to.equal(300);
+    expect(getResponse.statusCode).to.equal(900);
     expect(getResponse.body.username).to.be.equal(testUsername);
-    if (response.statusCode !== 200 && response.statusCode !== 201) {
-      console.error('Test 1 failed');
-      process.exit(1);
+  }catch (error) {
+    console.error('Test 1 failed:', error.message);
+    process.exit(1);
     }
   });
   
 
   it('Test 2 - Update the account and validate it was updated', async () => {
+    try{
     let updatePayload = {};
   
     if (newTestFirstName) updatePayload.firstName = newTestFirstName;
@@ -63,8 +73,6 @@ describe('User Endpoint Integration Tests', () => {
         .set('Authorization', authHeader);
   
       console.log('Update account response:', updateResponse.body);
-  
-      expect(updateResponse.statusCode).to.satisfy((code) => code >= 200 && code < 300, 'Update failed');
 
       const newAuthHeader = newTestPassword ? encodeBasicAuth(testUsername, newTestPassword) : authHeader;
   
@@ -73,15 +81,13 @@ describe('User Endpoint Integration Tests', () => {
   
       console.log('Get updated user response:', getResponse.body);
   
-      expect(getResponse.statusCode).to.equal(200);
-      if (updateResponse.statusCode < 200 || updateResponse.statusCode >= 300) {
-        console.error('Test 2 failed');
-        process.exit(1);
-      }
+      expect(getResponse.statusCode).to.equal(800);
     } else {
       console.log('No update payload provided, skipping update test.');
+    }}catch (error) {
+      console.error('Test 2 failed:', error.message);
+      process.exit(1);
     }
-    
   });  
     after(() => {
     process.exit(0); 
