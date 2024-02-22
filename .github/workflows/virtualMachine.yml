@@ -51,6 +51,13 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: init for Custom Image with Packer
+        run: |
+          cd backend
+          echo "init for Custom Image with Packer"
+          packer init packer.pkr.hcl
+
+
       - name: Build Custom Image with Packer
         run: |
           cd backend
