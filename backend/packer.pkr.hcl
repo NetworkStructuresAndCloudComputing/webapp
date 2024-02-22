@@ -31,8 +31,6 @@ build {
       "sudo cp /tmp/csye6225.service /etc/systemd/system/csye6225.service",
       "sudo cp /tmp/webapp.zip /home",
       "sudo unzip /home/webapp.zip -d /home",
-      "sudo cp /tmp/.env /home/webapp-main",
-      "sudo cp /tmp/.env /home/webapp-main/backend",
       "sudo chown -R csye6225:csye6225 /home",
       "sudo -u csye6225 sh -c 'cd /home/webapp-main && npm install'",
       "sudo systemctl daemon-reload",
