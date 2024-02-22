@@ -12,7 +12,7 @@ function encodeBasicAuth(username, password) {
 }
 
 describe('User Endpoint Integration Tests', () => {
-  const testUsername = 'anzalshaikh00@example.com';
+  const testUsername = 'anzalshaikh70@example.com';
   const testPassword = 'saanya';
   const testFirstName = 'Ayush';
   const testLastName = 'Kanyal';
@@ -41,8 +41,12 @@ describe('User Endpoint Integration Tests', () => {
   
     console.log('Get user response:', getResponse.body);
   
-    expect(getResponse.statusCode).to.equal(200);
+    expect(getResponse.statusCode).to.equal(300);
     expect(getResponse.body.username).to.be.equal(testUsername);
+    if (response.statusCode !== 200 && response.statusCode !== 201) {
+      console.error('Test 1 failed');
+      process.exit(1);
+    }
   });
   
 
@@ -70,9 +74,14 @@ describe('User Endpoint Integration Tests', () => {
       console.log('Get updated user response:', getResponse.body);
   
       expect(getResponse.statusCode).to.equal(200);
+      if (updateResponse.statusCode < 200 || updateResponse.statusCode >= 300) {
+        console.error('Test 2 failed');
+        process.exit(1);
+      }
     } else {
       console.log('No update payload provided, skipping update test.');
     }
+    
   });  
     after(() => {
     process.exit(0); 
