@@ -10,9 +10,9 @@ sudo yum -y install nodejs
 # Install MySQL server
 sudo yum -y install mysql-server
 
-# Enable MySQL service to start on boot
-sudo systemctl enable mysqld
+sudo systemctl enable --now mysqld
 
-# Clean up yum cache
-sudo yum clean all
+sudo mysql --connect-expired-password -u root -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '2108786Z@kir';"
+
+sudo yum -y install unzip
 

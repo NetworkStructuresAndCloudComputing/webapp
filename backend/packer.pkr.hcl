@@ -7,23 +7,6 @@ source "googlecompute" "custom-image" {
   zone                = "us-east1-b"
 }
 
-# Set default values for the variables from your .env file
-variable "database_username" {
-  default = "root"
-}
-
-variable "database_password" {
-  default = "2108786Z@kir"
-}
-
-variable "database_name" {
-  default = "CloudComputing"
-}
-
-variable "google_application_credentials" {
-  default = "/Users/zakirmemon/Downloads/cloudcomputing-414020-d5bd516e8358.json"
-}
-
 build {
   sources = ["source.googlecompute.custom-image"]
 
@@ -32,8 +15,13 @@ build {
   }
 
   provisioner "file" {
-    source      = "./webapp"
-    destination = "/tmp/webapp"
+    source      = "./webapp.zip"
+    destination = "/tmp/webapp.zip"
+  }
+
+  provisioner "file" {
+    source      = "./.env"
+    destination = "/tmp/.env"
   }
 
   provisioner "file" {
@@ -45,17 +33,20 @@ build {
     inline = [
       "sudo groupadd csye6225",
       "sudo useradd csye6225 --shell /usr/sbin/nologin -g csye6225",
-      "sudo mv /tmp/csye6225.service /etc/systemd/system/csye6225.service",
-      "sudo mv /tmp/webapp /home",
+      "sudo cp /tmp/csye6225.service /etc/systemd/system/csye6225.service",
+      "sudo cp /tmp/webapp.zip /home",
+      "sudo unzip /home/webapp.zip -d /home",
+      "sudo cp /tmp/.env /home/webapp-main",
+      "sudo cp /tmp/.env /home/webapp-main/backend",
       "sudo chown -R csye6225:csye6225 /home",
+      "sudo -u csye6225 sh -c 'cd /home/webapp-main && npm install'",
       "sudo systemctl daemon-reload",
       "sudo systemctl enable csye6225.service",
-
-      # Use the variables in the shell script
-      "export DATABASE_USERNAME=${var.database_username}",
-      "export DATABASE_PASSWORD=${var.database_password}",
-      "export DATABASE_NAME=${var.database_name}",
-      "export GOOGLE_APPLICATION_CREDENTIALS=${var.google_application_credentials}",
+      "sudo mysql -u root -p2108786Z@kir -e \"CREATE USER 'new_user'@'localhost' IDENTIFIED BY 'password';\"",
+      "sudo mysql -u root -p2108786Z@kir -e \"GRANT ALL PRIVILEGES ON *.* TO 'new_user'@'localhost' WITH GRANT OPTION;\"",
+      "sudo mysql -u root -p2108786Z@kir -e \"FLUSH PRIVILEGES;\"",
+      "sudo mysql -u new_user -ppassword -e \"CREATE DATABASE CloudComputing;\""
     ]
   }
 }
+

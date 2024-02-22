@@ -1,20 +1,21 @@
 [Unit]
-Description=CSYE 6225 webapp
-ConditionPathExists=/opt/webapp-main/App.js
+Description=CSYE 6225 Node.js App
 After=network.target
 
 [Service]
 Type=simple
 User=csye6225
 Group=csye6225
-WorkingDirectory=/opt
-EnvironmentFile=/opt/webapp/.env
-ExecStart=/usr/bin/node /opt/webapp/App.js
-Restart=on-failure
+ExecStart=/usr/bin/node /home/webapp-main/backend/App.js
+Restart=always
 RestartSec=3
 StandardOutput=syslog
 StandardError=syslog
 SyslogIdentifier=csye6225
+Environment="DATABASE_NAME=CloudComputing"
+Environment="DATABASE_USERNAME=new_user"
+Environment="DATABASE_PASSWORD=password"
+Environment="HOST=127.0.0.1"
 
 [Install]
 WantedBy=multi-user.target
