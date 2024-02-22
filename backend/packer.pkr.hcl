@@ -32,7 +32,7 @@ build {
       "sudo cp /tmp/webapp.zip /home",
       "sudo unzip /home/webapp.zip -d /home",
       "sudo chown -R csye6225:csye6225 /home",
-      "sudo -u csye6225 sh -c 'cd /home/webapp-main && npm install'",
+      "sudo -u csye6225 sh -c 'cd /home/webapp && npm install'",
       "sudo systemctl daemon-reload",
       "sudo systemctl enable csye6225.service",
       "sudo mysql -u root -p2108786Z@kir -e \"CREATE USER 'new_user'@'localhost' IDENTIFIED BY 'password';\"",
