@@ -11,6 +11,8 @@ function encodeBasicAuth(username, password) {
   return 'Basic ' + Buffer.from(`${username}:${password}`).toString('base64');
 }
 
+let testsFailed = false;
+
 describe('User Endpoint Integration Tests', () => {
   const testUsername = 'anzalshaikh00@example.com';
   const testPassword = 'saanya';
@@ -24,6 +26,7 @@ describe('User Endpoint Integration Tests', () => {
   const authHeader = encodeBasicAuth(testUsername, testPassword);
 
   it('Test 1 - Create an account and validate it exists', async () => {
+    try{
     const response = await request.post('/v1/user').send({
       firstName: testFirstName,
       lastName: testLastName,
@@ -43,10 +46,16 @@ describe('User Endpoint Integration Tests', () => {
   
     expect(getResponse.statusCode).to.equal(200);
     expect(getResponse.body.username).to.be.equal(testUsername);
+  }catch(err){
+    console.error(err);
+    testsFailed = true;
+  }
+
   });
   
 
   it('Test 2 - Update the account and validate it was updated', async () => {
+    try{
     let updatePayload = {};
   
     if (newTestFirstName) updatePayload.firstName = newTestFirstName;
@@ -73,8 +82,21 @@ describe('User Endpoint Integration Tests', () => {
     } else {
       console.log('No update payload provided, skipping update test.');
     }
+  }catch (err) {
+    console.error(err);
+    testsFailed = true;
+  }
   });  
-    after(() => {
-    process.exit(1); 
- });
+
+    after(async () => {
+    // Check if any test failed and exit with code 1 if true
+    if (testsFailed) {
+      console.error('One or more tests failed. Exiting with code 1.');
+      process.exit(1);
+    } else {
+      console.log('All tests passed. Exiting with code 0.');
+      process.exit(0);
+    }
+  });
+
 });
