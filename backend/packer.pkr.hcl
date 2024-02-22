@@ -20,12 +20,12 @@ build {
   }
 
   provisioner "file" {
-    source      = "${path.cwd}/.env"
+    source      = "/.env"
     destination = "/tmp/webapp/.env"
   }
 
   provisioner "file" {
-    source      = "${path.cwd}/.env"
+    source      = "/.env"
     destination = "/tmp/webapp/backend/.env"
   }
 
