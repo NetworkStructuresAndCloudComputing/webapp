@@ -35,6 +35,7 @@ jobs:
 
       - name: Setup Environment File
         run: |
+          cd .
           cat << EOF > .env
           HOST: 127.0.0.1
           DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
