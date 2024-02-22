@@ -1,7 +1,8 @@
+name: VM CI
+
 on:
   pull_request:
     branches: [ "main" ]
-    types: [closed]
   workflow_dispatch:
 
 jobs:
