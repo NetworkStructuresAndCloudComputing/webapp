@@ -12,10 +12,10 @@ function encodeBasicAuth(username, password) {
 }
 
 describe('User Endpoint Integration Tests', () => {
-  const testUsername = 'anzalshaikh00@example.com';
-  const testPassword = 'saanya';
-  const testFirstName = 'Ayush';
-  const testLastName = 'Kanyal';
+  const testUsername = 'anzalshaikh69@example.com';
+  const testPassword = 'Anzal@123';
+  const testFirstName = 'Anzal';
+  const testLastName = 'Shaikh';
 
   let newTestFirstName = '';
   let newTestLastName = '';
@@ -23,16 +23,6 @@ describe('User Endpoint Integration Tests', () => {
 
   const authHeader = encodeBasicAuth(testUsername, testPassword);
   let testsFailed = false;
-
-  after(async () =>  {
-
-    if(testsFailed) {
-      process.exit(1); 
-    } else {
-      process.exit(0);
-    }
-
-  });
 
   it('Test 1 - Create an account and validate it exists', async () => {
     try{

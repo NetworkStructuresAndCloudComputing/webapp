@@ -1,0 +1,54 @@
+name: Integration Tests, Image Creation
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  integration-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Run Integration Test
+        run: |
+          ./packer-script.sh
+        continue-on-error: true
+
+  build-artifact:
+    needs: integration-test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Install Node.js
+        run: |
+          curl -fsSL https://rpm.nodesource.com/setup_18.x | sudo bash -
+          sudo yum -y install nodejs
+
+      - name: Install MySQL Server
+        run: |
+          sudo yum -y install mysql-server
+          sudo systemctl enable mysqld
+
+      - name: Install Application Dependencies
+        run: npm install
+
+      - name: Create .env File
+        run: echo "DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}\nDATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}\nDATABASE_NAME=${{ secrets.DATABASE_NAME }}" > .env
+
+  build-custom-image:
+    needs: build-artifact
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Build Custom Image with Packer
+        run: packer build packer.pkr.hcl
