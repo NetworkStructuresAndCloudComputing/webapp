@@ -1,0 +1,62 @@
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  build-and-deploy:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Zip application code
+        run: |
+          # Change directory to the root of the repository
+          cd backend
+
+          # Zip the entire repository
+          zip -r webapp.zip .
+
+      - name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v0.4.0'
+        with:
+          credentials_json: '${{secrets.GOOGLE_CREDENTIALS}}'
+
+      - name: Setup Environment File
+        run: |
+          cat << EOF > development.env
+          DATABASE_NAME=${{ secrets.DATABASE_NAME }}
+          DATABASE_PORT=${{ secrets.DATABASE_PORT }}
+          HOST=${{ secrets.DATABASE_HOST }}
+          DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}
+          DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}
+          EOF
+        shell: bash
+
+      - name: Install Packer
+        run: |
+          curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+          sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+          sudo apt-get update && sudo apt-get install packer
+
+      - name: Initiate Packer template
+        run: |
+          cd backend
+          packer init packer.pkr.hcl
+
+      - name: Validate Packer template
+        run: |
+          cd backend
+          packer validate packer.pkr.hcl
+
+      - name: Build Packer template
+        run: |
+         cd backend
+         packer build packer.pkr.hcl
