@@ -37,16 +37,6 @@ build {
   }
 
   provisioner "file" {
-    source      = ".env"
-    destination = "/tmp/webapp/.env"
-  }
-
-  provisioner "file" {
-    source      = ".env"
-    destination = "/tmp/webapp/backend/.env"
-  }
-
-  provisioner "file" {
     source      = "./csye6225.service"
     destination = "/tmp/csye6225.service"
   }
