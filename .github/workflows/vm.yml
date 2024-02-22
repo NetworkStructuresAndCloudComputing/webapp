@@ -22,6 +22,7 @@ jobs:
       - name: Zip application code
         run: |
           # Change directory to the root of the repository
+          cd .
           cd backend
 
           # Zip the entire repository
