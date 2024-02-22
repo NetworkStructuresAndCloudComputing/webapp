@@ -36,13 +36,13 @@ build {
       "sudo cp /tmp/csye6225.service /lib/systemd/system/csye6225.service",
       "sudo cp /tmp/webapp.zip /opt",
       "sudo unzip /opt/webapp.zip -d /opt/webapp",
-      "sudo cp /temp/.env /opt/webapp"
+      "sudo cp /temp/.env /opt/webapp",
       "sudo chown -R csye6225:csye6225 /opt",
       "sudo -u csye6225 sh -c 'cd /opt/webapp && npm install'",
       "sudo mysql -u root -p2108786Z@kir -e \"CREATE USER 'new_user'@'localhost' IDENTIFIED BY 'password';\"",
       "sudo mysql -u root -p2108786Z@kir -e \"GRANT ALL PRIVILEGES ON *.* TO 'new_user'@'localhost' WITH GRANT OPTION;\"",
       "sudo mysql -u root -p2108786Z@kir -e \"FLUSH PRIVILEGES;\"",
-      "sudo mysql -u new_user -ppassword -e \"CREATE DATABASE CloudComputing;\""
+      "sudo mysql -u new_user -ppassword -e \"CREATE DATABASE CloudComputing;\"",
       "sudo systemctl daemon-reload",
       "sudo systemctl enable csye6225.service",
     ]
