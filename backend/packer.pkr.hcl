@@ -25,7 +25,7 @@ build {
   }
 
   provisioner "file" {
-    source      = var.env_file"
+    source      = var.env_file
     destination = "/tmp/webapp/.env"
   }
 
