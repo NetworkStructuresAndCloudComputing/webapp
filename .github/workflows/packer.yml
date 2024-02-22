@@ -12,6 +12,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      
+      - name: Zip application code
+        run: |
+          # Change directory to the root of the repository
+          cd .
+          cd backend
+
+          # Zip the entire repository
+          zip -r webapp.zip .
+
       - name: Install Packer
         run: |
           curl -O https://releases.hashicorp.com/packer/1.7.4/packer_1.7.4_linux_amd64.zip
