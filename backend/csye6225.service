@@ -6,16 +6,13 @@ After=network.target
 Type=simple
 User=csye6225
 Group=csye6225
-ExecStart=/usr/bin/node /home/webapp-main/backend/App.js
+ExecStart=/usr/bin/node /opt/webapp/backend/App.js
 Restart=always
 RestartSec=3
 StandardOutput=syslog
 StandardError=syslog
 SyslogIdentifier=csye6225
-Environment="DATABASE_NAME=CloudComputing"
-Environment="DATABASE_USERNAME=new_user"
-Environment="DATABASE_PASSWORD=password"
-Environment="HOST=127.0.0.1"
+EnvironmentFile="/opt/webapp/.env"
 
 [Install]
 WantedBy=multi-user.target
