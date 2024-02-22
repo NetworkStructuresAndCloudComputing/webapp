@@ -50,7 +50,7 @@ describe('User Endpoint Integration Tests', () => {
   
     console.log('Get user response:', getResponse.body);
   
-    expect(getResponse.statusCode).to.equal(900);
+    expect(getResponse.statusCode).to.equal(200);
     expect(getResponse.body.username).to.be.equal(testUsername);
   }catch (error) {
     console.error('Test 1 failed:', error.message);
@@ -81,7 +81,7 @@ describe('User Endpoint Integration Tests', () => {
   
       console.log('Get updated user response:', getResponse.body);
   
-      expect(getResponse.statusCode).to.equal(800);
+      expect(getResponse.statusCode).to.equal(200);
     } else {
       console.log('No update payload provided, skipping update test.');
     }}catch (error) {
