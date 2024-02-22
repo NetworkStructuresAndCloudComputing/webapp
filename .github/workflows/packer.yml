@@ -12,6 +12,25 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Zip application code
+        run: |
+          # Change directory to the root of the repository
+          cd .
+          cd backend
+
+          # Zip the entire repository
+          zip -r webapp.zip .
+
+      - name: Setup Environment File
+        run: |
+          cat << EOF > .env
+          HOST: 127.0.0.1
+          DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
+          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+          EOF
+        shell: bash 
+
       - name: Install Packer
         run: |
           curl -O https://releases.hashicorp.com/packer/1.7.4/packer_1.7.4_linux_amd64.zip
