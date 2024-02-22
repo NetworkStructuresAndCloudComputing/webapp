@@ -24,16 +24,6 @@ describe('User Endpoint Integration Tests', () => {
   const authHeader = encodeBasicAuth(testUsername, testPassword);
   let testsFailed = false;
 
-  after(async () =>  {
-
-    if(testsFailed) {
-      process.exit(1); 
-    } else {
-      process.exit(0);
-    }
-
-  });
-
   it('Test 1 - Create an account and validate it exists', async () => {
     try{
     const response = await request.post('/v1/user').send({
