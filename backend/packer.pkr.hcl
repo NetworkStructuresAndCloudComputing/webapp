@@ -11,9 +11,9 @@ build {
   sources = ["source.googlecompute.custom-image"]
 
   variable "env_file" {
-  type = string
-  default = "${path.cwd}/.env"
-}
+    type = string
+    default = "${path.cwd}/.env"
+  }
 
   provisioner "shell" {
     script = "packer-script.sh"
