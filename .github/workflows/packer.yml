@@ -16,7 +16,7 @@ jobs:
         run: |
          # Change directory to the root of the repository
          # Zip the entire repository
-         zip -r webapp.zip .
+         zip -r webapp.zip
 
       - name: Install Packer
         run: |
