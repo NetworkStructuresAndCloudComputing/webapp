@@ -17,7 +17,7 @@ jobs:
          # Change directory to the root of the repository
          cd ..
          # Zip the entire repository
-         zip -r backend/webapp.zip backend/*
+         zip -r webapp.zip .
 
       - name: Install Packer
         run: |
