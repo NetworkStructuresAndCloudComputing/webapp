@@ -14,11 +14,9 @@ jobs:
 
       - name: Zip application code
         run: |
-         # Change directory to the root of the repository
-         cd .
-         
+         # Change directory to the root of the repositorys
          # Zip the entire repository
-         zip -r webapp.zip .
+         zip -r webapp.zip *
 
       - name: Install Packer
         run: |

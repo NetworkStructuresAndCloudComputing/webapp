@@ -22,10 +22,8 @@ jobs:
       - name: Zip application code
         run: |
           # Change directory to the root of the repository
-          cd .
-
           # Zip the entire repository
-          zip -r webapp.zip .
+          zip -r webapp.zip *
 
       - name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v0.4.0'
