@@ -23,7 +23,6 @@ jobs:
         run: |
           # Change directory to the root of the repository
           cd .
-          cd Desktop
           cd forkedRepo
 
           # Zip the entire repository
