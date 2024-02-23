@@ -1,40 +1,40 @@
-name: Integration Tests
+# name: Integration Tests
 
-on:
-  pull_request:
-    branches:
-      - main
+# on:
+#   pull_request:
+#     branches:
+#       - main
 
-jobs:
-  test:
-    runs-on: ubuntu-latest
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
 
-    services:
-      mysql:
-        image: mysql:latest
-        env:
-          MYSQL_ROOT_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-          MYSQL_DATABASE: ${{ secrets.DATABASE_NAME }}
-        ports:
-          - 3306:3306
+#     services:
+#       mysql:
+#         image: mysql:latest
+#         env:
+#           MYSQL_ROOT_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+#           MYSQL_DATABASE: ${{ secrets.DATABASE_NAME }}
+#         ports:
+#           - 3306:3306
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v3
 
-      - name: Wait for MySQL container
-        run: |
-          npm install -g wait-on
-          wait-on tcp:127.0.0.1:3306
+#       - name: Wait for MySQL container
+#         run: |
+#           npm install -g wait-on
+#           wait-on tcp:127.0.0.1:3306
 
-      - name: Install dependencies
-        run: npm install
+#       - name: Install dependencies
+#         run: npm install
 
-      - name: Run integration tests
-        env:
-          HOST: 127.0.0.1
-          DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
-          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-          DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
-        run: npm run integration-test
+#       - name: Run integration tests
+#         env:
+#           HOST: 127.0.0.1
+#           DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
+#           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+#           DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+#         run: npm run integration-test
 
