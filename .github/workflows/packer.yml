@@ -16,6 +16,7 @@ jobs:
         run: |
          # Change directory to the root of the repository
          cd .
+         cd backend
 
          # Zip the entire repository
          zip -r webapp.zip .
