@@ -1,21 +1,18 @@
 source "googlecompute" "custom-image" {
-
-
-
-    project_id          = "cloudcomputing-demo-415406"
+  project_id          = "cloudcomputing-demo-415406"
   source_image_family = "centos-stream-8"
   image_name          = "custom-image-mysql"
   ssh_username        = "centos"
   image_family        = "custom-images-zakir"
-  zone                = "us-east1-c
+  zone                = "us-east1-c"
 }
 
 build {
   sources = ["source.googlecompute.custom-image"]
 
-      provisioner "shell" {
-        script = "packer-script.sh"
-      }
+  provisioner "shell" {
+    script = "packer-script.sh"
+  }
 
   provisioner "file" {
     source      = "./webapp.zip"
