@@ -1,10 +1,10 @@
 source "googlecompute" "custom-image" {
   project_id          = "cloudcomputing-demo-415406"
   source_image_family = "centos-stream-8"
-  image_name          = "custom-image-with-mysql"
+  image_name          = "custom-image-mysql"
   ssh_username        = "centos"
-  image_family        = "custom-images"
-  zone                = "us-east1-b"
+  image_family        = "custom-images-zakir"
+  zone                = "us-east1-c"
 }
 
 build {
