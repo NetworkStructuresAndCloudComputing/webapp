@@ -12,10 +12,6 @@ RestartSec=3
 StandardOutput=syslog
 StandardError=syslog
 SyslogIdentifier=csye6225
-Environment="DATABASE_NAME=CloudComputing"
-Environment="DATABASE_USERNAME=new_user"
-Environment="DATABASE_PASSWORD=password"
-Environment="HOST=127.0.0.1"
 
 [Install]
 WantedBy=multi-user.target
