@@ -34,7 +34,10 @@ build {
       "sudo chown -R csye6225:csye6225 /home",
       "sudo -u csye6225 sh -c 'cd /home/webapp-main && npm install'",
       "sudo systemctl daemon-reload",
-      "sudo systemctl enable csye6225.service"
+      "sudo systemctl enable csye6225",
+      "sudo journalctl -u csye6225.service",
+      "sudo systemctl start csye6225",
+      "sudo systemctl status csye6225"
     ]
   }
 }
