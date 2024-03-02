@@ -16,7 +16,6 @@ jobs:
         run: |
          # Change directory to the root of the repository
          cd .
-         cd backend
 
          # Zip the entire repository
          zip -r webapp.zip .
@@ -31,7 +30,6 @@ jobs:
       - name: Packer fmt
         id: fmt
         run: |
-          cd backend
           git_diff_before=$(git diff)
           packer fmt packer.pkr.hcl
           git_diff_after=$(git diff)
@@ -47,7 +45,6 @@ jobs:
       - name: Packer validate
         id: validate
         run: |
-          cd backend
           packer validate packer.pkr.hcl
           exit_code=$?
           echo "exit_code=$exit_code" >> $GITHUB_OUTPUT
