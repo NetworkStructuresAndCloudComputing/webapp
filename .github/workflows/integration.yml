@@ -21,8 +21,8 @@ jobs:
 
       - name: Set up MySQL database and user
         run: |
-          export MYSQL_PWD="${{ secrets.DATABASE_PASSWORD }}"
-          mysql -u root -e "CREATE DATABASE IF NOT EXISTS ${{ secrets.DATABASE_NAME }}; GRANT ALL ON ${{ secrets.DATABASE_NAME }}.* TO '${{ secrets.DATABASE_USERNAME }}'@'%' IDENTIFIED BY '${{ secrets.DATABASE_PASSWORD }}';"
+          echo "CREATE DATABASE IF NOT EXISTS ${{ secrets.DATABASE_NAME }}; GRANT ALL ON ${{ secrets.DATABASE_NAME }}.* TO '${{ secrets.DATABASE_USERNAME }}'@'%' IDENTIFIED BY '${{ secrets.DATABASE_PASSWORD }}';" > setup.sql
+          sudo mysql -u root < setup.sql
         
       - name: Wait for MySQL to start
         run: |
