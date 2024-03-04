@@ -2,6 +2,11 @@ import { DataTypes } from 'sequelize';
 import { sequelize } from '../services/database-service.js';
 
 const userSchema = {
+  uid: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
+  },
   firstName: {
     type: DataTypes.STRING,
     allowNull: false,
