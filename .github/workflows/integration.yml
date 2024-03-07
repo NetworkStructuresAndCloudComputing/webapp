@@ -9,23 +9,16 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    services:
-      mysql:
-        image: mysql:latest
-        env:
-          MYSQL_ROOT_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-          MYSQL_DATABASE: ${{ secrets.DATABASE_NAME }}
-        ports:
-          - 3306:3306
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Wait for MySQL container
+      - name: Setup MySQL
         run: |
-          npm install -g wait-on
-          wait-on tcp:127.0.0.1:3306
+          sudo systemctl start mysql
+          mysql -u root -proot -e "CREATE USER '${{ secrets.DATABASE_USERNAME }}'@'localhost' IDENTIFIED BY '${{ secrets.DATABASE_PASSWORD }}';"
+          mysql -u root -proot -e "GRANT ALL PRIVILEGES ON . TO '${{ secrets.DATABASE_USERNAME }}'@'localhost' WITH GRANT OPTION;"
+          mysql -u root -proot -e "CREATE DATABASE ${{ secrets.DATABASE_NAME }};"
 
       - name: Install dependencies
         run: npm install
