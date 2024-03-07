@@ -17,22 +17,15 @@ jobs:
           MYSQL_DATABASE: ${{ secrets.DATABASE_NAME }}
         ports:
           - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up MySQL
+      - name: Wait for MySQL container
         run: |
-          sudo /etc/init.d/mysql start
-
-      - name: Wait for MySQL
-        run: |
-          sudo apt-get install -y netcat
-          while ! nc -z localhost 3306; do
-            sleep 1
-          done
+          npm install -g wait-on
+          wait-on tcp:127.0.0.1:3306
 
       - name: Install dependencies
         run: npm install
@@ -44,3 +37,4 @@ jobs:
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
           DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
         run: npm run integration-test
+
