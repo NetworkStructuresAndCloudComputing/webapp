@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  integration-tests:
+  test:
     runs-on: ubuntu-latest
 
     services:
@@ -19,22 +19,22 @@ jobs:
           - 3306:3306
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: '13'
 
       - name: Install dependencies
         run: npm install
 
-      - name: Run Integration Tests
-        run: npm run integration-test
-
+      - name: Run integration tests
         env:
           HOST: 127.0.0.1
           DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
           DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+        run: npm run integration-test
+
