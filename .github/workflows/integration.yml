@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  test:
+  integration-tests:
     runs-on: ubuntu-latest
 
     services:
@@ -19,22 +19,22 @@ jobs:
           - 3306:3306
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Wait for MySQL container
-        run: |
-          npm install -g wait-on
-          wait-on tcp:127.0.0.1:3306
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '14'
 
       - name: Install dependencies
         run: npm install
 
-      - name: Run integration tests
+      - name: Run Integration Tests
+        run: npm run integration-test
+
         env:
           HOST: 127.0.0.1
           DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
           DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
-        run: npm run integration-test
-
