@@ -9,26 +9,18 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:latest
+        env:
+          MYSQL_ROOT_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          MYSQL_DATABASE: ${{ secrets.DATABASE_NAME }}
+        ports:
+          - 3306:3306
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
-      - name: Install MySQL
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y mysql-server
-          sudo service mysql start
-
-      - name: Wait for MySQL to start
-        run: |
-          while ! mysqladmin ping -h127.0.0.1 --silent; do
-            sleep 1
-          done
-
-      - name: Set up MySQL database
-        run: |
-          mysql -h127.0.0.1 -uroot -e "CREATE DATABASE IF NOT EXISTS ${{ secrets.DATABASE_NAME }};"
-          mysql -h127.0.0.1 -uroot -e "GRANT ALL PRIVILEGES ON ${{ secrets.DATABASE_NAME }}.* TO '${{ secrets.DATABASE_USERNAME }}'@'%' IDENTIFIED BY '${{ secrets.DATABASE_PASSWORD }}';"
 
       - name: Install dependencies
         run: npm install
@@ -40,3 +32,4 @@ jobs:
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
           DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
         run: npm run integration-test
+
