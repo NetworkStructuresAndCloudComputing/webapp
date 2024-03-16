@@ -48,7 +48,7 @@ build {
       "sudo systemctl enable google-cloud-ops-agent",
       "sudo systemctl start google-cloud-ops-agent"
     ]
-}
+  }
 
   provisioner "file" {
     source      = "./ops-agent-config.yaml"
