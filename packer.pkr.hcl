@@ -51,12 +51,13 @@ build {
   }
 
   provisioner "file" {
-    source      = "./ops-agent-config.yaml"
-    destination = "/etc/google-cloud-ops-agent/config.yaml"
+    source      = "config.yaml"
+    destination = "/tmp/config.yaml"
   }
 
   provisioner "shell" {
     inline = [
+      "sudo cp /tmp/config.yaml /etc/google-cloud-ops-agent/config.yaml",
       "sudo systemctl restart google-cloud-ops-agent"
     ]
   }
