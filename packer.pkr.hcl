@@ -24,6 +24,11 @@ build {
     destination = "/tmp/csye6225.service"
   }
 
+  provisioner "file" {
+    source      = "config.yaml"
+    destination = "/tmp/config.yaml"
+  }
+
   provisioner "shell" {
     inline = [
       "sudo groupadd csye6225",
@@ -37,26 +42,11 @@ build {
       "sudo systemctl enable csye6225.service",
       "sudo journalctl -u csye6225.service",
       "sudo systemctl start csye6225.service",
-      "sudo systemctl status csye6225.service"
-    ]
-  }
-
-  provisioner "shell" {
-    inline = [
+      "sudo systemctl status csye6225.service",
       "sudo curl -sSO https://dl.google.com/cloudagents/add-google-cloud-ops-agent-repo.sh",
       "sudo bash add-google-cloud-ops-agent-repo.sh --also-install",
       "sudo systemctl enable google-cloud-ops-agent",
-      "sudo systemctl start google-cloud-ops-agent"
-    ]
-  }
-
-  provisioner "file" {
-    source      = "config.yaml"
-    destination = "/tmp/config.yaml"
-  }
-
-  provisioner "shell" {
-    inline = [
+      "sudo systemctl start google-cloud-ops-agent",
       "sudo cp /tmp/config.yaml /etc/google-cloud-ops-agent/config.yaml",
       "sudo systemctl restart google-cloud-ops-agent"
     ]
