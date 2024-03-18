@@ -29,5 +29,7 @@ jobs:
           DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME1 }}
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
           DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
-        run: npm run integration-test
+        run: | 
+               sudo mkdir /var/log/webapp
+               npm run integration-test
 
