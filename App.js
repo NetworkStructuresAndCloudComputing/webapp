@@ -10,6 +10,13 @@ const PORT = 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use((req, res, next) => {
+  const traceContext = req.header('x-cloud-trace-context');
+  const spanId = traceContext ? traceContext.split('/')[0] : null;
+  req.spanId = spanId;
+  next();
+});
+
 app.use('/', healthzRoute);
 app.use('/', createUser);
 app.use('/', updateUser);
