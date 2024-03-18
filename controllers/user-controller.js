@@ -20,7 +20,7 @@ export const getUser = async (request, response) => {
         spanId: request.spanId,
         httpRequest: {
           method: request.method,
-          status: request.status,
+          status: request.statusCode,
           url: request.originalUrl,
         }
       });
@@ -33,7 +33,7 @@ export const getUser = async (request, response) => {
       spanId: request.spanId,
       httpRequest: {
         method: request.method,
-        status: request.status,
+        status: request.statusCode,
         url: request.originalUrl,
       }
     });
@@ -46,7 +46,7 @@ export const getUser = async (request, response) => {
       spanId: req.spanId,
       httpRequest: {
         method: request.method,
-        status: request.status,
+        status: request.statusCode,
         url: request.originalUrl,
       }
     });
@@ -65,7 +65,7 @@ export const getUser = async (request, response) => {
             spanId: request.spanId,
             httpRequest: {
               method: request.method,
-              status: request.status,
+              status: request.statusCode,
               url: request.originalUrl,
             }
           });
@@ -78,7 +78,7 @@ export const getUser = async (request, response) => {
               spanId: request.spanId,
               httpRequest: {
                 method: request.method,
-                status: request.status,
+                status: request.statusCode,
                 url: request.originalUrl,
               }
             });
@@ -92,7 +92,7 @@ export const getUser = async (request, response) => {
           spanId: request.spanId,
           httpRequest: {
             method: request.method,
-            status: request.status,
+            status: request.statusCode,
             url: request.originalUrl,
           }
         });
@@ -112,7 +112,7 @@ export const updateUser = async (request, response) => {
       spanId: request.spanId,
       httpRequest: {
         method: request.method,
-        status: request.status,
+        status: request.statusCode,
         url: request.originalUrl,
       }
     });
@@ -125,7 +125,7 @@ export const updateUser = async (request, response) => {
       spanId: request.spanId,
       httpRequest: {
         method: request.method,
-        status: request.status,
+        status: request.statusCode,
         url: request.originalUrl,
       }
     });

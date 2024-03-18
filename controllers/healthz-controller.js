@@ -15,7 +15,7 @@ export const healthzCheck = async (req, res) => {
       spanId: req.spanId,
       httpRequest: {
         method: req.method,
-        status: req.status,
+        status: req.statusCode,
         url: req.originalUrl,
       }
     });
@@ -28,7 +28,7 @@ export const healthzCheck = async (req, res) => {
       spanId: req.spanId,
       httpRequest: {
         method: req.method,
-        status: req.status,
+        status: req.statusCode,
         url: req.originalUrl,
       }
     });
@@ -43,7 +43,7 @@ export const methodNotAllowed = (req, res) => {
     spanId: req.spanId,
     httpRequest: {
       method: req.method,
-      status: req.status,
+      status: req.statusCode,
       url: req.originalUrl,
     }
   });
@@ -57,7 +57,7 @@ export const badRequest = (req, res) =>{
     spanId: req.spanId,
     httpRequest: {
       method: req.method,
-      status: req.status,
+      status: req.statusCode,
       url: req.originalUrl,
     }
   });
