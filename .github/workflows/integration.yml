@@ -16,7 +16,7 @@ jobs:
       - name: Create log directory
         run: |
           sudo mkdir /var/log/webapp
-          sudo chown -R csye6225:csye6225 /var/log/webapp
+          sudo chown -R $USER:$USER /var/log/webapp
           sudo chmod 755 /var/log/webapp
 
       - name: Setup MySQL
