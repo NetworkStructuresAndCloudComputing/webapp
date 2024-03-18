@@ -30,6 +30,5 @@ jobs:
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
           DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
         run: | 
-               sudo mkdir /var/log/webapp
                npm run integration-test
 
