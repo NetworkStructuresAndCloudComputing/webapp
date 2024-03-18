@@ -29,7 +29,7 @@ build {
     destination = "/tmp/config.yaml"
   }
   provisioner "file" {
-    source      = "./app.log"
+    source      = "app.log"
     destination = "/tmp/app.log"
   }
 
