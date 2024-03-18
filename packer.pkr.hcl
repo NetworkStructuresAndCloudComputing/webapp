@@ -28,6 +28,10 @@ build {
     source      = "config.yaml"
     destination = "/tmp/config.yaml"
   }
+  provisioner "file" {
+    source      = "./app.log"
+    destination = "/tmp/app.log"
+  }
 
   provisioner "shell" {
     inline = [
