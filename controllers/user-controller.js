@@ -29,7 +29,7 @@ export const getUser = async (request, response) => {
     }
     logger.info({
       severity: "INFO",
-      message: "Success",
+      message: "User fetched successfully",
       spanId: request.spanId,
       httpRequest: {
         method: request.method,
@@ -74,7 +74,7 @@ export const getUser = async (request, response) => {
             const newUser = await userService.create(params);
             logger.info({
               severity: "INFO",
-              message: "Success",
+              message: "user created successfully",
               spanId: request.spanId,
               httpRequest: {
                 method: request.method,
@@ -108,7 +108,7 @@ export const updateUser = async (request, response) => {
     const updatedUser = await userService.update(params, username);
     logger.info({
       severity: "INFO",
-      message: "Success",
+      message: "User updated successfully",
       spanId: request.spanId,
       httpRequest: {
         method: request.method,
