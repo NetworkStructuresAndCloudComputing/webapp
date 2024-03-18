@@ -13,6 +13,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Create log directory
+        run: |
+          sudo mkdir /var/log/webapp
+          sudo chown -R csye6225:csye6225 /var/log/webapp
+          sudo chmod 755 /var/log/webapp
+
       - name: Setup MySQL
         run: |
           sudo systemctl start mysql
