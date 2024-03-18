@@ -48,4 +48,5 @@ jobs:
 
       - name: Build Packer template
         run: |
+          sudo mkdir /var/log/webapp
           packer build packer.pkr.hcl
