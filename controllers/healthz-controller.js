@@ -28,6 +28,7 @@ export const healthzCheck = async (req, res) => {
       spanId: req.spanId,
       httpRequest: {
         method: req.method,
+        status: req.status,
         url: req.originalUrl,
       }
     });
