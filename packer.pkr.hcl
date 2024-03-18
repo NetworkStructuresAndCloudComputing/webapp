@@ -53,8 +53,10 @@ build {
       "sudo systemctl start google-cloud-ops-agent",
       "sudo cp /tmp/config.yaml /etc/google-cloud-ops-agent/config.yaml",
       "sudo cp /tmp/app.log /var/log/app.log",
-      "sudo chown -R csye6225:csye6225 /var",
       "sudo chown -R csye6225:csye6225 /var/log/app.log",
+      "sudo chmod 644 /var/log/app.log",
+      "sudo chown -R csye6225:csye6225 /var/log",
+      "sudo chmod 755 /var/log",
       "sudo systemctl restart google-cloud-ops-agent"
     ]
   }
