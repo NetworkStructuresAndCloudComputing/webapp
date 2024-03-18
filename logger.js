@@ -12,7 +12,7 @@ const logFormat = winston.format.printf(({ level, message,spanId, timestamp, htt
 const logger = winston.createLogger({
   format: winston.format.combine(winston.format.timestamp(), logFormat),
   transports: [
-    new winston.transports.File({ filename: '/var/log/webapp/app.log' }),
+    new winston.transports.File({ filename: '/var/log/app.log' }),
     new winston.transports.Console(),
   ],
 });
