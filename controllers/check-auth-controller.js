@@ -1,10 +1,22 @@
 import User from "../models/user.js"
 import bcrypt from 'bcrypt';
 import { setErrorResponse } from "./response-handler.js";
+import Logger  from 'node-json-logger';
+
+import logger from '../logger.js'
 
 const checkAuth = async (req, res, next) => {
   if (!req.get('Authorization')) {
       setErrorResponse('401', 'User is not authenticated to access the resource.', res);
+      logger.warn({
+        severity: "WARNING",
+        message: "User is not authenticated to access the resource.",
+        httpRequest: {
+          method: req.method,
+          status: res.statusCode,
+          url: req.originalUrl,
+        }
+      });
       return;
   } else {
       var credentials = Buffer.from(req.get('Authorization').split(' ')[1], 'base64')
@@ -33,16 +45,43 @@ const checkAuth = async (req, res, next) => {
                       next();
                   } else {
                     setErrorResponse('401', 'User is not authenticated to access the resource.', res);
+                    logger.warn({
+                        severity: "WARNING",
+                        message: "User is not authenticated to access the resource.",
+                        httpRequest: {
+                          method: req.method,
+                          status: res.statusCode,
+                          url: req.originalUrl,
+                        }
+                      });
                       return;
                   }
               });
           } else {
             setErrorResponse('401', 'User is not authenticated to access the resource.', res);
+            logger.warn({
+                severity: "WARNING",
+                message: "User is not authenticated to access the resource.",
+                httpRequest: {
+                  method: req.method,
+                  status: res.statusCode,
+                  url: req.originalUrl,
+                }
+              });
               return;
           }
       } catch (error) {
           console.error(error);
           setErrorResponse('400', 'Bad Request', res);
+          logger.warn({
+            severity: "WARNING",
+            message: "Bad Request.",
+            httpRequest: {
+              method: req.method,
+              status: res.statusCode,
+              url: req.originalUrl,
+            }
+          });
           return;
       }
   }
