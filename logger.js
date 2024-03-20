@@ -5,7 +5,6 @@ const logFormat = winston.format.printf(({ level, message,spanId, timestamp, htt
       timestamp: timestamp,
       severity: level.toUpperCase(),
       message,
-      spanId,
       httpRequest
     })
   });
