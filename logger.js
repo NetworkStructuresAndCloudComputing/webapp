@@ -1,6 +1,6 @@
 import winston from 'winston';
 
-const logFormat = winston.format.printf(({ level, message,spanId, timestamp, httpRequest}) => {
+const logFormat = winston.format.printf(({ level, message, timestamp, httpRequest}) => {
     return JSON.stringify({
       timestamp: timestamp,
       severity: level.toUpperCase(),
