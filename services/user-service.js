@@ -41,10 +41,6 @@ export const create = async (params = {}) => {
 
     const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
     if (!emailRegex.test(username)) {
-      logger.debug({
-        severity: "DEBUG",
-        message: "Invalid email address for username.",
-      });
       throw new Error('Invalid email address for username'); 
     }
 
@@ -57,9 +53,9 @@ export const create = async (params = {}) => {
     return userResponse;
   } catch (error) {
     console.error('Error creating user:', error);
-    logger.error({
-      severity: "ERROR",
-      message: "Error creating user.",
+    logger.debug({
+      severity: "DEBUG",
+      message: 'Error creating user, ' + error,
     });
     throw error;
   }
@@ -81,20 +77,12 @@ export const update = async (params, username) => {
     }
 
     if ('password' in params && params.password === '') {
-      logger.debug({
-        severity: "DEBUG",
-        message: "Password cannot be empty.",
-      });
       throw new Error('Password cannot be empty');
     }
 
     const user = await User.findOne({ where: { username } });
 
     if (!user) {
-      logger.error({
-        severity: "ERROR",
-        message: "User not found.",
-      });
       throw new Error('User not found');
     }
 
@@ -105,9 +93,9 @@ export const update = async (params, username) => {
     return userResponse;
   } catch (error) {
     console.error('Error updating user:', error);
-    logger.error({
-      severity: "ERROR",
-      message: "Error updating user.",
+    logger.debug({
+      severity: "DEBUG",
+      message: 'Error updating user, ' + error,
     });
     throw error;
   }
