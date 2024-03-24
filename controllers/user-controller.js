@@ -2,7 +2,7 @@ import * as userService from "../services/user-service.js";
 import { setErrorResponse, setResponse, setResponsefor201, setResponsefor204 } from "./response-handler.js";
 import Logger  from 'node-json-logger';
 import logger from '../logger.js'
-import { publishMessage } from '../publishMessage';
+import publishMessage from '../publishMessage';
 
 export const getUser = async (request, response) => {
   try {
