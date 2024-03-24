@@ -1,7 +1,7 @@
 import * as userService from "../services/user-service.js";
 import { setErrorResponse, setResponse, setResponsefor201, setResponsefor204 } from "./response-handler.js";
 import logger from '../logger.js';
-import { publishMessage } from '../publishMessage.js';
+import publishMessage from '../publishMessage.js';
 
 export const getUser = async (request, response) => {
   try {
