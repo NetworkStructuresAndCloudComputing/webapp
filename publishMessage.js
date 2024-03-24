@@ -3,7 +3,7 @@ import PubSub from '@google-cloud/pubsub';
 
 const pubSubClient = new PubSub();
 
-async function publishMessage(topicNameOrId, data) {
+export const publishMessage = async (topicNameOrId, data) => {
   const dataBuffer = Buffer.from(data);
   try {
     const messageId = await pubSubClient
@@ -15,5 +15,3 @@ async function publishMessage(topicNameOrId, data) {
     process.exitCode = 1;
   }
 }
-
-export default publishMessage
