@@ -1,8 +1,8 @@
 import * as userService from "../services/user-service.js";
 import { setErrorResponse, setResponse, setResponsefor201, setResponsefor204 } from "./response-handler.js";
 import Logger  from 'node-json-logger';
-
 import logger from '../logger.js'
+import { publishMessage } from '../publishMessage';
 
 export const getUser = async (request, response) => {
   try {
@@ -64,6 +64,11 @@ export const getUser = async (request, response) => {
             });
         } else {
             const newUser = await userService.create(params);
+            const messagePayload = {
+              userId: newUser.uid,
+              email: newUser.username,
+          };
+          await publishMessage('verify_email', JSON.stringify(messagePayload)); 
             setResponsefor201(newUser, response);
             logger.info({
               severity: "INFO",
@@ -121,4 +126,20 @@ export const updateUser = async (request, response) => {
   }
 };
 
+
+export const verifyUser = async (request, response, next) => {
+  try {
+
+      const { username } = request;  
+      const user = await userService.searchByEmail({ username });
+      if (!user || !user.verified) {
+          setErrorResponse('403', 'User account not verified', response);
+          return;
+      }
+      next();
+  } catch (error) {
+      console.error(error);
+      setErrorResponse('500', 'Internal server error', response);
+  }
+};
 
