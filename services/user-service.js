@@ -6,7 +6,7 @@ import logger from '../logger.js'
 
 
 export const searchById = async (params = {}) => {
-  const user = await User.findOne({ where: { id: params.id } });
+  const user = await User.findOne({ where: { id: params.uid} });
   const userResponse = { ...user.toJSON(), password: undefined };
   return userResponse;
 };
