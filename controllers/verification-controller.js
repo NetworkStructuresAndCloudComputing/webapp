@@ -1,8 +1,10 @@
+import * as userService from "../services/user-service.js";
+
 export const verifyUser = async (req, res) => {
     const {userId} = req.params
   
       try {
-        const user = await userServices.searchByUserId(userId)
+        const user = await userService.searchById(userId)
         console.log(user)
         const currentTime = new Date()
         if(currentTime > user.expirationTime ){
