@@ -62,7 +62,7 @@ export const getUser = async (request, response) => {
               }
             });
         } else {
-          if (!req.body.hasOwnProperty('isVerified')) {
+          if (!params.hasOwnProperty('isVerified')) {
             params.isVerified = false;
         }
             const newUser = await userService.create(params);
