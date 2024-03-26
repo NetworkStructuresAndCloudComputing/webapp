@@ -34,6 +34,13 @@ const userSchema = {
     allowNull: false,
     defaultValue: DataTypes.NOW,
   },
+  expirationTime: {
+    type: DataTypes.DATE
+  },
+  isVerified: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false
+  }
 };
 
 const User = sequelize.define('Users', userSchema, {

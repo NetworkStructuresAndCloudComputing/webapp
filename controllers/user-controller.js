@@ -62,6 +62,9 @@ export const getUser = async (request, response) => {
               }
             });
         } else {
+          if (!req.body.hasOwnProperty('isVerified')) {
+            params.isVerified = false;
+        }
             const newUser = await userService.create(params);
             const messagePayload = {
               userId: newUser.uid,
