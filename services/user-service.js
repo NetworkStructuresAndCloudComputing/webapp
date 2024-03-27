@@ -6,9 +6,13 @@ import logger from '../logger.js'
 
 
 export const searchById = async (uid) => {
-  const user = await User.findOne({ where: { uid } });
-  const userResponse = { ...user.toJSON(), password: undefined };
-  return userResponse;
+  console.log("uid", uid);
+  const user = await User.findOne({ 
+    where: { uid },
+    attributes: { exclude: ['password'] }, // Exclude password field
+  });
+  
+  return user;
 };
 
 export const searchByEmail = async (params = {}) => {
