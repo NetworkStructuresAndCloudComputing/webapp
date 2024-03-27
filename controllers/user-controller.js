@@ -21,16 +21,29 @@ export const getUser = async (request, response) => {
       });
       return;
     }
-    setResponse(user, response);
-    logger.info({
-      severity: "INFO",
-      message: "User fetched successfully",
-      httpRequest: {
-        method: request.method,
-        status: response.statusCode,
-        url: request.originalUrl,
-      }
-    });
+    if (user.isVerified) {
+      setResponse(user, response);
+      logger.info({
+        severity: 'INFO',
+        message: 'User fetched successfully',
+        httpRequest: {
+          method: request.method,
+          status: response.statusCode,
+          url: request.originalUrl,
+        },
+      });
+    } else {
+      setErrorResponse('403', 'User is not verified', response);
+      logger.warn({
+        severity: "WARNING",
+        message: "User is not verified.",
+        httpRequest: {
+          method: request.method,
+          status: response.statusCode,
+          url: request.originalUrl,
+        }
+      });
+    }
   } catch (e) {
     console.error(e);
     setErrorResponse('404', "Bad Request", response);
@@ -103,6 +116,7 @@ export const updateUser = async (request, response) => {
     const { username } = request;
     const params = { ...request.body };
     const updatedUser = await userService.update(params, username);
+    if (user.isVerified) {
     setResponsefor204(updatedUser, response);
     logger.info({
       severity: "INFO",
@@ -113,6 +127,18 @@ export const updateUser = async (request, response) => {
         url: request.originalUrl,
       }
     });
+  } else {
+    setErrorResponse('403', 'User is not verified', response);
+    logger.warn({
+      severity: "WARNING",
+      message: "User is not verified.",
+      httpRequest: {
+        method: request.method,
+        status: response.statusCode,
+        url: request.originalUrl,
+      }
+    });
+  }
   } catch (e) {
     console.error(e);
     setErrorResponse('400', 'Invalid request, check the payload', response);
