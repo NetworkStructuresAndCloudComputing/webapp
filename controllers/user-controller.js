@@ -139,10 +139,7 @@ export const verifyUser = async (req, res) => {
         res.status(400).json({message: "Link expired"});
       }
       else{
-
-
         user.set({...user.dataValues, isVerified: true})
-
         await user.save();
         logger.info({
           message: "User verified successfully", 
@@ -154,8 +151,6 @@ export const verifyUser = async (req, res) => {
         })
         return res.status(200).json({isVerified: true});
       }
-      
-      
     } catch (error) {
       console.error('Error updating user:', error);
       logger.error({
