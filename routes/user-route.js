@@ -6,7 +6,7 @@ import express from "express";
 const router = express.Router();
 
 router.use("/v1/user/self", checkAuth);
-router.get("/verify_user/:userId", userController.verifyUser)
+router.get("/v1/user/verify_user/:userId", userController.verifyUser)
 
 router.route("/v1/user/self")
   .get(userController.getUser)
