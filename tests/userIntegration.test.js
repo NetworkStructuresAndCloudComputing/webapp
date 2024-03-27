@@ -12,7 +12,7 @@ function encodeBasicAuth(username, password) {
 }
 
 describe('User Endpoint Integration Tests', () => {
-  const testUsername = 'anzalshaikh430@example.com';
+  const testUsername = 'anzalshaikh435@example.com';
   const testPassword = 'saanya';
   const testFirstName = 'Ayush';
   const testLastName = 'Kanyal';
@@ -33,7 +33,7 @@ describe('User Endpoint Integration Tests', () => {
         password: testPassword,
       });
 
-      expect(response.statusCode).to.be.oneOf([200, 403, 201]); // Accepts either 200 or 403
+      expect(response.statusCode).to.be.oneOf([200, 403, 201]);
     } catch (error) {
       console.error('Test 1 failed:', error.message);
       process.exit(1);
@@ -53,7 +53,7 @@ describe('User Endpoint Integration Tests', () => {
           .send(updatePayload)
           .set('Authorization', authHeader);
 
-        expect(updateResponse.statusCode).to.be.oneOf([200, 403, 204]); // Accepts either 200 or 403
+        expect(updateResponse.statusCode).to.be.oneOf([200, 403, 204]); 
       } else {
         console.log('No update payload provided, skipping update test.');
       }
