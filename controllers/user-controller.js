@@ -116,7 +116,7 @@ export const updateUser = async (request, response) => {
     const { username } = request;
     const params = { ...request.body };
     const updatedUser = await userService.update(params, username);
-    if (user.isVerified) {
+    if (updatedUser.isVerified) {
     setResponsefor204(updatedUser, response);
     logger.info({
       severity: "INFO",
