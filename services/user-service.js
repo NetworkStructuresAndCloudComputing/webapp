@@ -9,7 +9,7 @@ export const searchById = async (uid) => {
   console.log("uid", uid);
   const user = await User.findOne({ 
     where: { uid },
-    attributes: { exclude: ['password'] }, // Exclude password field
+    attributes: { exclude: ['password'] },
   });
   
   return user;
