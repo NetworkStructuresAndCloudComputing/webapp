@@ -4,7 +4,7 @@ source "googlecompute" "custom-image" {
   image_name          = "custom-image-mysql"
   ssh_username        = "centos"
   image_family        = "custom-images-zakir"
-  zone                = "us-east1-c"
+  zone                = "us-east4-c"
 }
 
 build {
