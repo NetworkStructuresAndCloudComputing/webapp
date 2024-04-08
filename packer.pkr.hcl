@@ -1,5 +1,5 @@
 source "googlecompute" "custom-image" {
-  project_id          = "cloudcomputing-419723"
+  project_id          = "cloudcomputing-demo-415406"
   source_image_family = "centos-stream-8"
   image_name          = "custom-image-mysql"
   ssh_username        = "centos"
