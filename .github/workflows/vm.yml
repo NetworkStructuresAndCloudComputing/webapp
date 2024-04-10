@@ -58,11 +58,11 @@ jobs:
   
       - name: Configure instance group with new template
         run: |
-          gcloud compute instance-groups managed set-instance-template webapp-igm --region=us-east1 --template=webapp-instance-template-version4 --project=cloudcomputing-demo-415406
+          gcloud compute instance-groups managed set-instance-template webapp-igm --region=us-east1 --template=webapp-instance-template-version2 --project=cloudcomputing-demo-415406
   
       - name: Start rolling update
         run: |
-          gcloud compute instance-groups managed rolling-action start-update webapp-igm --version=template="webapp-instance-template-version4" --max-surge=5 --region=us-east1 --project=cloudcomputing-demo-415406
+          gcloud compute instance-groups managed rolling-action start-update webapp-igm --version=template="webapp-instance-template-version2" --max-surge=5 --region=us-east1 --project=cloudcomputing-demo-415406
   
       - name: Monitor instance group update
         run: |
