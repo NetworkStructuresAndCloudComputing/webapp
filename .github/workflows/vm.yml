@@ -6,88 +6,68 @@ on:
   workflow_dispatch:
 
 jobs:
-
   build-and-deploy:
+    # if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-      
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '20'
-        
-    - name: Zip application code
-      run: |
-        # Change directory to the root of the repository
-        cd .
-        # Zip the entire repository
-        zip -r webapp.zip .
-        
-    - name: 'Authenticate to Google Cloud'
-      uses: 'google-github-actions/auth@v0.4.0'
-      with:
-        credentials_json: ${{ secrets.GCP_CREDENTIALS }}
-        
-    - name: Install Packer
-      run: |
-        curl -O https://releases.hashicorp.com/packer/1.7.4/packer_1.7.4_linux_amd64.zip
-        unzip packer_1.7.4_linux_amd64.zip
-        sudo mv packer /usr/local/bin/packer
-        packer version
-        
-    - name: Initiate Packer template
-      run: |
-        packer init packer.pkr.hcl
-        
-    - name: Validate Packer template
-      run: |
-        packer validate packer.pkr.hcl
-        
-    - name: Build Packer template
-      run: |
-        packer build packer.pkr.hcl
-        
-    # NEW: Create a new Instance Template version with the latest machine image id
-    - name: Create new Instance Template version
-      env:
-        GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
-      run: |
-        image_id=$(gcloud compute images list --filter="name=packer-*" --format="value(id)" --limit=1)
-        gcloud compute instance-templates create-with-container ${INSTANCE_TEMPLATE_NAME}-v2 \
-          --machine-type=$INSTANCE_TEMPLATE_MACHINE_TYPE \
-          --image=$image_id \
-          --tags=$INSTANCE_TEMPLATE_TAGS \
-          --region=$COMPUTE_REGION
-          
-    # NEW: Configure the managed instance group to use the new template
-    - name: Update Managed Instance Group
-      env:
-        GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
-      run: |
-        gcloud compute instance-groups managed rolling-action start-update ${INSTANCE_GROUP_NAME} \
-          --version="template=${INSTANCE_TEMPLATE_NAME}-v2" \
-          --region=$COMPUTE_REGION
-          
-    # NEW: Monitor the managed instance group update
-    - name: Monitor Instance Group Update
-      env:
-        GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
-      run: |
-        gcloud compute instance-groups managed wait-until-stable ${INSTANCE_GROUP_NAME} \
-          --region=$COMPUTE_REGION \
-          --timeout=600
-        
-        # Check the status of the instance group update
-        update_status=$(gcloud compute instance-groups managed describe ${INSTANCE_GROUP_NAME} \
-          --region=$COMPUTE_REGION \
-          --format="value(currentActions.type)")
-        
-        if [ "$update_status" != "NONE" ]; then
-          echo "Instance group update is not complete. Current status: $update_status"
-          exit 1
-        else
-          echo "Instance group update is complete."
-        fi
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Zip application code
+        run: |
+          # Change directory to the root of the repository
+          cd .
+
+          # Zip the entire repository
+          zip -r webapp.zip .
+
+      - name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v0.4.0'
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: Install Packer
+        run: |
+          curl -O https://releases.hashicorp.com/packer/1.7.4/packer_1.7.4_linux_amd64.zip
+          unzip packer_1.7.4_linux_amd64.zip
+          sudo mv packer /usr/local/bin/packer
+          packer version
+
+      - name: Initiate Packer template
+        run: |
+          packer init packer.pkr.hcl
+
+      - name: Validate Packer template
+        run: |
+          packer validate packer.pkr.hcl
+
+      - name: Build Packer template
+        run: |
+          packer build packer.pkr.hcl
+
+      - name: Create new instance template version
+        run: |
+          latest_image=$(gcloud compute images list --filter="family=$IMAGE_FAMILY" --format="value(ID)")
+          gcloud compute instance-templates create $NEW_TEMPLATE_NAME$ --source-instance-template-url $EXISTING_TEMPLATE_NAME --image=$latest_image --description="New template version with latest machine image" --region=$REGION
+
+      - name: Configure instance group with new template
+        run: |
+          gcloud compute instance-groups managed set-instance-template $INSTANCE_GROUP_NAME --template=$NEW_TEMPLATE_NAME --zone=$ZONE
+
+      - name: Start rolling update
+        run: |
+          gcloud compute instance-groups managed rolling-action start-update $INSTANCE_GROUP_NAME --zone=$ZONE
+
+      - name: Monitor instance group update
+        run: |
+          status="RUNNING"
+          while [ "$status" != "ROLLOUT_DONE" ]; do
+            status=$(gcloud compute instance-groups managed describe $INSTANCE_GROUP_NAME --zone=$ZONE --format='value(instanceGroupStatus.versionTarget.utilizationTarget)')
+            sleep 10
+          done
