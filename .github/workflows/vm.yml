@@ -54,7 +54,7 @@ jobs:
       - name: Create new instance template version
         run: |
           latest_image=$(gcloud compute images list --filter="family=[IMAGE_FAMILY]" --format="value(ID)")
-          gcloud compute instance-templates create [NEW_TEMPLATE_NAME] --source-instance-template [EXISTING_TEMPLATE_NAME] --image=$latest_image --description="New template version with latest machine image" --region=[REGION]
+          gcloud compute instance-templates create [NEW_TEMPLATE_NAME] --source-instance-zone [EXISTING_TEMPLATE_NAME] --image=$latest_image --description="New template version with latest machine image" --region=[REGION]
 
       - name: Configure instance group with new template
         run: |
