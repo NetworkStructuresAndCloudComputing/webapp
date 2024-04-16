@@ -26,7 +26,7 @@ describe('User Endpoint Integration Tests', () => {
 
   it('Test 1 - Create an account and validate it exists', async () => {
     try {
-      const response = await request.post('/v1/user').send({
+      const response = await request.post('/v2/user').send({
         firstName: testFirstName,
         lastName: testLastName,
         username: testUsername,
@@ -49,7 +49,7 @@ describe('User Endpoint Integration Tests', () => {
       if (newTestPassword) updatePayload.password = newTestPassword;
 
       if (Object.keys(updatePayload).length > 0) {
-        const updateResponse = await request.put(`/v1/user/self`)
+        const updateResponse = await request.put(`/v2/user/self`)
           .send(updatePayload)
           .set('Authorization', authHeader);
 
