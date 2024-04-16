@@ -4,7 +4,7 @@ import * as invalidErrorController from "../controllers/invalidError-controller.
 
 const router = express.Router();
 
-router.post('/v1/user',userController.createUser);
+router.post('/v6/user',userController.createUser);
 router.post('*',invalidErrorController.errorURL);
   
 export default router;
