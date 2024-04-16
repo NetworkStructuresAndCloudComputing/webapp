@@ -5,10 +5,10 @@ import express from "express";
 
 const router = express.Router();
 
-router.use("/v1/user/self", checkAuth);
-router.get("/v1/user/verify_user/:userId", userController.verifyUser)
+router.use("/v6/user/self", checkAuth);
+router.get("/v6/user/verify_user/:userId", userController.verifyUser)
 
-router.route("/v1/user/self")
+router.route("/v6/user/self")
   .get(userController.getUser)
   .put(userController.updateUser);
 
